@@ -1,0 +1,10 @@
+READING FILES
+=============
+
+1. Go to the File Selection tab and click 'Browse' to choose the directory that contains the raw glider files. 
+
+2. A list of glider files should appear (matching the format: C0000_mm_dd_yyyy)
+
+3. Click the button to import the data. 
+
+4. A summary of the data will show in the text box on the right. 

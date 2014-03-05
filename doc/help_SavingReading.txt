@@ -1,0 +1,12 @@
+LOADING AND SAVING DATA
+=======================
+
+It is possible to save data that has been imported. This is done from the 'Data' tab.
+
+The following formats are supported:
+    CSV         Comma Seperated Values [default]
+    MAT         MATLAB data file
+
+Data that has been processed and saved as one of these formats can also be loaded directly. 
+
+The 'Data' tab also serves as a basic data review platform.

@@ -1,0 +1,27 @@
+ugly,pretty
+duft_pHV,pH [V]
+licor_RH,Relative Humidity [%]
+licor_RH_temp,Relative Humidity Temperature [C]
+licor_RH_tempstd,RH Temp Std Dev [C]
+licor_RHstd,RH Std Dev [%]
+licor_atm_xco2_dry,xCO2 dry - Atmospheric 
+licor_o2sat,Oxygen Saturation [%]
+licor_o2std,O2 Sat Std Dev [%]
+licor_pres,Licor Pressure [kPa]
+licor_span_coeff,Licor Span Coefficients
+licor_sw_xco2_dry,xCO2 dry - Seawater
+licor_temp,Licor Temperature [C]
+licor_tempstd,Licor Temp Std Dev [C]
+licor_xco2,xCO2 unadjusted 
+licor_xco2std,xCO2 unadjusted Std Dev
+licor_zero_coeff,Licor Zero Coefficients
+prwl_cond,Conductivity
+prwl_pres,Prawler Pressure [kPa]
+prwl_temp,Sea Temperature [C]
+prwl_salt,Salinity [units]
+sb63_temp,SeaBird Temperature [C]
+wg_battery_logic,Battery - Logic [V]
+wg_battery_transmitter,Battery - Transmitter [V]
+wg_datenum,Date and Time
+wg_latitude,Latitude [deg N]
+wg_longitude,Longitude [deg E]

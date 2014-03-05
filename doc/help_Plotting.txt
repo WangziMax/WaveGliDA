@@ -1,0 +1,24 @@
+PLOTTING MAPS AND DATA
+======================
+
+Two types of figures can be plotted: Time Series and Scatter Maps
+
+
+Time Series
+-----------
+Go to the 'Time Series' tab. Choose the appropriate X-axis variable:
+    Date Time       (pandas.DataFrame.index)
+    Latitude
+    Longitude
+    
+There is the option to choose one or two Y-axes. For each of the axes you can set the following:
+    Axis Title      [alpha-numeric]
+    Min - Max       [numeric / datetime]
+    line params     line color
+                    line style
+                    line width
+    marker params   marker face color
+                    marker shape
+                    marker size
+    
+Once you've selected your parameters you can plot the figure. The program uses the standard matplotlib backend and a figure should pop up. You can change basic layout in this stage and also save the figure.
