@@ -68,7 +68,7 @@ class WavGliDaPro(Frame_MAIN):
         self.BTN_SaveFile.GetChildren()[0].SetLabel('Save data as *.csv')
         
         lib.list_2_ListBox(self.LB_HELP, self.help_list)
- 
+
         
         # SET FONTS
         if sys.platform.startswith('win'):
