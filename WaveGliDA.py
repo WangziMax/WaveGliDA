@@ -72,15 +72,15 @@ class WavGliDaPro(Frame_MAIN):
         
         # SET FONTS
         if sys.platform.startswith('win'):
-            font_sansserif = "Broadway"
-            size_sansserif = 9
-            font_monospace = "Lucida Console"
-            size_monospace = 9
+            font_monospace = "Lucida Sans Typewriter"
+            size_monospace = 10
         elif sys.platform.startswith('darwin'):
-            font_monospace = "Lucida Console"
-            size_monospace = 9
+            font_monospace = "Monaco"
+            size_monospace = 10
         else:
-            pass
+            font_monospace = "Monaco"
+            size_monospace = 10
+        
         self.LB_Files.SetFont(     wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.TXT_HELP.SetFont(     wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.LB_Files.SetFont(     wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )

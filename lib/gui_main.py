@@ -99,7 +99,7 @@ class Frame_MAIN ( wx.Frame ):
 		
 		bSizer32.Add( self.DirSelector, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		self.BTN_LoadFile = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_FILE_MUST_EXIST|wx.FLP_OPEN )
+		self.BTN_LoadFile = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"Wave Glider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_FILE_MUST_EXIST|wx.FLP_OPEN )
 		self.BTN_LoadFile.SetToolTipString( u"Load a previously saved file (*wg.csv)" )
 		
 		bSizer32.Add( self.BTN_LoadFile, 1, wx.ALL, 5 )
@@ -173,7 +173,9 @@ class Frame_MAIN ( wx.Frame ):
 		
 		bSizer34 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.BTN_SaveFile = wx.FilePickerCtrl( self.NBPanel_Data, wx.ID_ANY, u"test", u"Enter a filename *wg.csv", u"Comma Seperated Values (*.csv) | *.csv ; MATLAB (*.mat) | *.mat", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OVERWRITE_PROMPT|wx.FLP_SAVE )
+		self.BTN_SaveFile = wx.FilePickerCtrl( self.NBPanel_Data, wx.ID_ANY, u"test", u"Enter a filename *.wg.csv", u"WaveGlider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OVERWRITE_PROMPT|wx.FLP_SAVE )
+		self.BTN_SaveFile.Enable( False )
+		
 		bSizer34.Add( self.BTN_SaveFile, 1, wx.ALL, 5 )
 		
 		self.m_staticline1 = wx.StaticLine( self.NBPanel_Data, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )

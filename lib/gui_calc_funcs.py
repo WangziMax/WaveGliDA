@@ -16,7 +16,7 @@ def func_calc_salt( self, event ):
     if hasattr(self.data, 'prwl_salt'):
         pass
     else:
-        
+        self.StatusBar.SetStatusText('calculating salinity...')
         i = np.where([key.startswith('prwl') for key in self.data.keys()])[0].max() + 1
         
         salt = Series(None, index=self.data.index)
@@ -24,7 +24,7 @@ def func_calc_salt( self, event ):
                          self.data.prwl_temp,
                          np.zeros_like(self.data.prwl_cond))
         self.data.insert(i, 'prwl_salt', salt)
-    
+        self.StatusBar.SetStatusText('')
 
 def func_calc_co2( self, event ):
 

@@ -1,33 +1,44 @@
-Wave Glider Data Analysis
-=========================
-
 WAVe GLIder Data Analysis is a program to read, calculate and plot raw Wave Glider files. 
 
 For more info read the help and info files in this panel.
  
-version:    0.3
-date:       21 Feb 2014
+version:    0.4
+date:       5 March 2014
 author:     Luke Gregor
 email:      luke.gregor@outlook.com
 
 
 CHANGES
--------
-### 0.2 ###
-Made scripts more modular. Each imports individually rather than being in the main script. this makes it easier to understand and edit.
-Sliders for the XY plots
-Options for resolution, coastlines, rivers, landfill added
-Salinity button bug
-Lat and Lon line bugs
-Sliders for xaxis in xyplots
-### 0.3 ###
-Linux compatibility
-* Changed buttons under files tab slightly
-* Window is 50px wider 
-* Changed the way the map resolution and variable are read
+=======
+
+- 0.2 --------------------
+ * Made scripts more modular
+   * Each imports individually rather than being in the main script. 
+   * Easier to understand and edit.
+ * Sliders for the XY plots
+ * Options for resolution, coastlines, rivers, landfill added
+ * Salinity button bug
+ * Lat and Lon line bugs
+ * Sliders for xaxis in xyplots
+
+- 0.3 --------------------
+ * Linux compatibility
+   * Changed buttons under files tab slightly
+   * Window is 50px wider 
+   * Changed the way the map resolution and variable are read
+
+- 0.4 ---------------------
+ * Fixed the save as *.csv bug
+ * Salinity is calculated automatically if prawler data exists
+ * Progress bar for data loaded into 
+ * Mac compatibility
+   * Default font for all but monospace
+   * Platform specific monospace fonts
+
+
 
 TO DO
------
+=====
 pco2 calculations
 Help for the maps
 Glider speed

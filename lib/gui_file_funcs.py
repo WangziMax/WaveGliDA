@@ -119,8 +119,9 @@ def func_savedata( self, event ):
 def func_populate_datagrid( self ):
 
     self.StatusBar.SetStatusText('loading data into spreadsheet...')
+    self.Files_Progress.SetValue(0)
     datetimes = self.data.index.to_datetime()
-
+    
     while len(self.data.keys()) >= self.GridData.NumberCols:
         self.GridData.AppendCols()
     while len(self.data.keys()) < self.GridData.NumberCols:
@@ -140,13 +141,22 @@ def func_populate_datagrid( self ):
 
     data = self.data.values.astype(str)
     Grid = self.GridData
+
     R, C = data.shape
+    n = int(R * C)
+    i, j = 1, 1
     for c in range(C):
         for r in np.arange(R):
             Grid.SetCellValue(r, c, data[r,c])
+            
+            if (i % (n/100) ) == 0:
+                self.Files_Progress.SetValue(j)
+                j +=1
+            i+=1
+            
 
     self.BTN_SaveFile.Enable()
-    self.BTN_SaveFile.SetPath('%s_wg.csv' % datetime.today().strftime('%Y%m%d_%H%M'))
+    self.BTN_SaveFile.SetPath('%s.wg.csv' % datetime.today().strftime('%Y%m%d_%H%M'))
     self.StatusBar.SetStatusText('')
     self.func_populate_plot_choices()
     self.func_populate_map_choices()
