@@ -21,14 +21,13 @@ For this program to work you need Python 2.7 with the following packages install
 * wx
 * basemap
 
-I recommend that you download Canopy dist by Enthought. This contains all the packages you'll need and is compatible with Windows, Linux and MAC.
+I recommend that you download [Canopy dist by Enthought](https://www.enthought.com/downloads/). The free distribution contains all the packages you'll need and is compatible with Windows, Linux and MAC.
 I've also tested the Anaconda (by Continuum) distribution of Python, but this distribution does not work in Mac OS X due to issues with the WX package. 
 
 
 ####C. RUNNING
-To run the program run type:
-    python '.../WaveGliDA.pyc'
-where ... is the path to the WaveGliDA directory
+To run the program navigate to the WaveGliDA directory and type: 
+`python '.../WaveGliDA.pyc'`
 
 
 ####E. TO DO
