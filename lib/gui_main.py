@@ -146,7 +146,7 @@ class Frame_MAIN ( wx.Frame ):
 		self.m_panel7 = wx.Panel( self.NBPanel_FileSelection, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer341 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.TC_FileStatus = wx.TextCtrl( self.m_panel7, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE|wx.TE_RICH )
+		self.TC_FileStatus = wx.TextCtrl( self.m_panel7, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_RICH )
 		self.TC_FileStatus.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
 		
 		bSizer341.Add( self.TC_FileStatus, 5, wx.ALL|wx.EXPAND, 5 )

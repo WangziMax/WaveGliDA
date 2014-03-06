@@ -102,20 +102,40 @@ def func_read_selected( self, event ):
     BusyCursor = wx.StockCursor(wx.CURSOR_WAIT)
     self.MAIN.SetCursor(BusyCursor)
     
-    self.data = read_wg_filelist(file_list,
-                                 progress_obj=self.Files_Progress,
-                                 statusbar_obj=self.StatusBar)
+    self.ImportErrors = ''
+    self.TC_FileStatus.Clear()
     
+    self.data = read_wg_filelist(file_list, self)
+    
+    num_import_errors = len(self.ImportErrors.splitlines())
+    self.TC_FileStatus.AppendText('================\n')
+    self.TC_FileStatus.AppendText(' IMPORT SUMMARY\n')
+    self.TC_FileStatus.AppendText('================\n')
+    self.TC_FileStatus.AppendText('Total Files:  %d\n' % len(file_list))
+    self.TC_FileStatus.AppendText('Successful:   %d\n' % (len(file_list) - num_import_errors))
+    self.TC_FileStatus.AppendText('Failed:       %d (names below)\n' % num_import_errors)
+    self.TC_FileStatus.AppendText(self.ImportErrors)
     self.func_calc_salt( None )
     self.func_calc_co2 ( None )
     
-    self.TC_FileStatus.Clear()
-    self.TC_FileStatus.AppendText(self.data.__str__())
+    date_sta, date_end = self.data.__str__().split('\n')[1].split(',')[1].strip().split(' to ')
+    date_sta = datetime.strptime(date_sta.split('+')[0], '%Y-%m-%d %H:%M:%S')
+    date_end = datetime.strptime(date_end.split('+')[0], '%Y-%m-%d %H:%M:%S')
+    self.TC_FileStatus.AppendText('\n')
+    self.TC_FileStatus.AppendText('==============\n')
+    self.TC_FileStatus.AppendText(' DATA SUMMARY \n')
+    self.TC_FileStatus.AppendText('==============\n')
+    self.TC_FileStatus.AppendText('Start \t')
+    self.TC_FileStatus.AppendText('%s \n' % date_sta.strftime('%H:%M - %d %b %Y'))
+    self.TC_FileStatus.AppendText('End   \t')
+    self.TC_FileStatus.AppendText('%s \n\n' % date_end.strftime('%H:%M - %d %b %Y'))
+    self.TC_FileStatus.AppendText('\n'.join(self.data.__str__().split('\n')[2:-1]))
     self.TC_FileStatus.SetInsertionPoint(0)
     
     self.func_populate_datagrid( None )
     
     self.MAIN.SetCursor(NormCursor)
+
 
 def func_loaddata( self, event ):
 
@@ -141,12 +161,27 @@ def func_loaddata( self, event ):
         if key.startswith('Unnamed'):
             self.data.pop(key)
     
+    self.TC_FileStatus.Clear()
     NormCursor = self.MAIN.GetCursor()
     BusyCursor = wx.StockCursor(wx.CURSOR_WAIT)
     self.MAIN.SetCursor(BusyCursor)
     
     self.func_calc_salt( None )
     self.func_calc_co2( None )
+    
+    date_sta, date_end = self.data.__str__().split('\n')[1].split(',')[1].strip().split(' to ')
+    date_sta = datetime.strptime(date_sta.split('+')[0], '%Y-%m-%d %H:%M:%S')
+    date_end = datetime.strptime(date_end.split('+')[0], '%Y-%m-%d %H:%M:%S')
+    self.TC_FileStatus.AppendText('\n')
+    self.TC_FileStatus.AppendText('==============\n')
+    self.TC_FileStatus.AppendText(' DATA SUMMARY \n')
+    self.TC_FileStatus.AppendText('==============\n')
+    self.TC_FileStatus.AppendText('Start \t')
+    self.TC_FileStatus.AppendText('%s \n' % date_sta.strftime('%H:%M - %d %b %Y'))
+    self.TC_FileStatus.AppendText('End   \t')
+    self.TC_FileStatus.AppendText('%s \n\n' % date_end.strftime('%H:%M - %d %b %Y'))
+    self.TC_FileStatus.AppendText('\n'.join(self.data.__str__().split('\n')[2:-1]))
+    self.TC_FileStatus.SetInsertionPoint(0)
     
     self.func_populate_datagrid( None )
     

@@ -57,7 +57,7 @@ def is_wg_file(filepath, glider_id=None):
         return False
 
 
-def read_wg_filelist(file_list, progress_obj=None, statusbar_obj=None):
+def read_wg_filelist(file_list, self):
     """
     Overview
     --------
@@ -88,8 +88,7 @@ def read_wg_filelist(file_list, progress_obj=None, statusbar_obj=None):
 
     """
 
-    if progress_obj:
-        progress_obj.SetRange(len(file_list))
+    self.Files_Progress.SetRange(len(file_list))
 
     dat = None
     for c, fullpath in enumerate(file_list):
@@ -100,16 +99,15 @@ def read_wg_filelist(file_list, progress_obj=None, statusbar_obj=None):
             else:        # for following iterations append the data
                 dat = dat.append(read_wgfile(fullpath))
         except:
-            statusbar_obj.SetStatusText('SKIPPED %s' % os.path.split(fullpath)[-1])
+            self.ImportErrors += '              %s\n' % os.path.split(fullpath)[-1]
+            #~ self.TC_FileStatus.AppendText( error_txt )
 
-        if progress_obj:
-            progress_obj.SetValue(c+1)
-        if statusbar_obj:
-            statusbar_obj.SetStatusText('reading %s' % os.path.split(fullpath)[-1])
+
+        self.Files_Progress.SetValue(c+1)
+        self.StatusBar.SetStatusText('reading %s' % os.path.split(fullpath)[-1])
 
     if dat: # if there are no files in the dir, returns None
-        if statusbar_obj:
-            statusbar_obj.SetStatusText('')
+        self.StatusBar.SetStatusText('')
         return dat.sort_index().drop_duplicates()
     else:
         return None
