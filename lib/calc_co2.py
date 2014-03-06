@@ -9,7 +9,7 @@ author:  Luke Gregor
 
 import numpy as np
 exp = np.exp
-log = np.exp
+log = np.log
 
 def calc_xco2_raw(raw1, raw2, temp, pres, coeff_zero, coeff_span):
     """xCO2 from raw voltages (calc_xco2_raw)
@@ -114,37 +114,35 @@ def calc_pco2(xco2_dry, TempC_equ, Salt, TempC_sea):
     product of the pressure in the measureing chamber and xCO2.
     """
 
-    # Weiss, R. F., and Price, B. A., Nitrous oxide solubility in water and
-    #       seawater, Marine Chemistry 8:347-359, 1980.
-    # They fit the data of Goff and Gratch (1946) with the vapor pressure
-    #       lowering by sea salt as given by Robinson (1954).
-    # This fits the more complicated Goff and Gratch, and Robinson equations
-    #       from 273 to 313 deg K and 0 to 40 Sali with a standard error
-    #       of .015#, about 5 uatm over this range.
-    # This may be on IPTS-29 since they didn't mention the temperature scale,
-    #       and the data of Goff and Gratch came before IPTS-48.
-    # The references are:
-    # Goff, J. A. and Gratch, S., Low pressure properties of water from -160 deg
-    #       to 212 deg F, Transactions of the American Society of Heating and
-    #       Ventilating Engineers 52:95-122, 1946.
-    # Robinson, Journal of the Marine Biological Association of the U. K.
-    #       33:449-455, 1954.
-    #       This is eq. 10 on p. 350.
-    #       This is in atmospheres.
-    TempK = TempC_equ + 273.15
+    #~ # Vapor pressure is calculated using the MIT's seawater package available at:
+    #~ #    http://web.mit.edu/seawater/
+    #~ # This is different to the methods defined by the CO2SYS script, but is in 
+    #~ # accordance with the "Guide to best practices for ocean CO2 measurements".
+    #~ def vapres_seawater(S, T):
+        #~ # convert to Kelvin if needed
+        #~ if T < 250:
+            #~ T = T + 273.15
+        #~ # coefficients
+        #~ a = [-5.8002206E+03,  1.3914993E+00,
+             #~ -4.8640239E-02,  4.1764768E-05,
+             #~ -1.4452093E-08,  6.5459673E+00]
+        #~ # equation
+        #~ Pv_w = exp((a[0]/T) + a[1] + a[2]*T + a[3]*T**2 + a[4]*T**3 + a[5]*log(T))
+        #~ Pv   = Pv_w  / (1. + 0.57357 * (S / (1000.-S)))
+        #~ return Pv
+    #~ VapPres_SW = vapres_seawater( Salt, TempC_equ ) * 1e-6
+    #~ VPFac_MIT = 1. - VapPres_SW
+    
+    
+    VPWP = exp(24.4543 - 67.4509 *(100. /(TempC_equ+ 273.15)) - 4.8489 *log((TempC_equ+ 273.15)/100.))
+    VPCorrWP = exp(-0.000544 *Salt)
+    VPSWWP = VPWP * VPCorrWP
+    VPFac_CO2SYS = 1. - VPSWWP
+    
+    pco2_equ = xco2_dry * VPFac_CO2SYS
+    pco2_sea = pco2_equ * exp(0.0423 * (TempC_sea - TempC_equ) )
 
-    VPWP = exp(24.4543 - \
-               67.4509 * (100 / TempK) - \
-               4.8489 * log(TempK / 100.))
-    VPCorrWP = exp(-0.000544 / Salt)
-    VPSWWP = VPWP / VPCorrWP
-    VPFac = 1 - VPSWWP
-
-    pco2_equ = xco2_dry * VPFac
-    pco2_sea = pco2_equ * exp(0.0423 * (TempC_sea - TempC_equ))
-
-
-    return pco2_sea.round(3)
+    return pco2_equ.round(3), pco2_sea.round(3)
 
 
 def calc_fco2(pco2, tempC):
@@ -185,6 +183,8 @@ def calc_fco2(pco2, tempC):
 
     return fco2.round(3)
 
+
 if __name__ == "__main__":
 
-    print 'test'
+    a, b, c = calc_pco2( 237.9585, 10, 35, 0)
+    print calc_fco2( b, 10)

@@ -62,21 +62,23 @@ def func_calc_co2( self, event ):
                                         licor_RH [iatm],
                                         licor_RH [ispn])
     # Calculate pCO2
-    licor_pco2 = Series(None, index=self.data.index)
-    licor_pco2 = calc_pco2(licor_xco2dry,
-                           licor_temp,
-                           prwl_salt,
-                           prwl_temp)
+    pco2_equ = Series(None, index=self.data.index)
+    pco2 = Series(None, index=self.data.index)
+    pco2_equ, pco2 = calc_pco2(licor_xco2dry,
+                                   licor_temp,
+                                   prwl_salt,
+                                   prwl_temp)
 
     # Calculate fCO2
-    licor_fco2 = Series(None, index=self.data.index)
-    licor_fco2 = calc_fco2(licor_pco2, prwl_temp)
+    fco2 = Series(None, index=self.data.index)
+    fco2 = calc_fco2(pco2, prwl_temp)
 
     
     i = np.where([key.startswith('licor') for key in self.data.keys()])[0].max() + 1
     self.data.insert(i,   'licor_xco2dry', licor_xco2dry)
-    self.data.insert(i+1, 'licor_pco2', licor_pco2)
-    self.data.insert(i+2, 'licor_fco2', licor_fco2)
+    self.data.insert(i+1, 'licor_pco2_equ', pco2_equ)
+    self.data.insert(i+1, 'licor_pco2', pco2)
+    self.data.insert(i+2, 'licor_fco2', fco2)
     self.StatusBar.SetStatusText('')
     
     self.BTN_calcCO2.SetLabel('CO2 parameters have been calculated')
