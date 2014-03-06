@@ -1,0 +1,40 @@
+CHANGES
+=======
+Changes are shown by version
+
+------------
+ Version 0.5
+------------
+ * pCO2 calculations
+ * will only save as *.csv file
+ * Mouse cursor changes when busy importing
+ * large status text
+
+------------
+ Version 0.4
+------------ * Fixed the save as *.csv bug
+ * Salinity is calculated automatically if prawler data exists
+ * Progress bar for data loaded into 
+ * Mac compatibility
+   * Default font for all but monospace
+   * Platform specific monospace fonts
+
+------------
+ Version 0.3
+------------ 
+ * Linux compatibility
+   * Changed buttons under files tab slightly
+   * Window is 50px wider 
+   * Changed the way the map resolution and variable are read
+
+------------
+ Version 0.2
+------------
+ * Made scripts more modular
+   * Each imports individually rather than being in the main script. 
+   * Easier to understand and edit.
+ * Sliders for the XY plots
+ * Options for resolution, coastlines, rivers, landfill added
+ * Salinity button bug
+ * Lat and Lon line bugs
+ * Sliders for xaxis in xyplots

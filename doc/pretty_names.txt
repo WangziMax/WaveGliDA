@@ -1,27 +1,33 @@
 ugly,pretty
-duft_pHV,pH [V]
-licor_RH,Relative Humidity [%]
-licor_RH_temp,Relative Humidity Temperature [C]
-licor_RH_tempstd,RH Temp Std Dev [C]
-licor_RHstd,RH Std Dev [%]
-licor_atm_xco2_dry,xCO2 dry - Atmospheric 
-licor_o2sat,Oxygen Saturation [%]
-licor_o2std,O2 Sat Std Dev [%]
-licor_pres,Licor Pressure [kPa]
+duft_pHV,pH (V)
+licor_RH,Relative Humidity (%)
+licor_RH_temp,Relative Humidity Temperature ($^{\circ}$C)
+licor_RH_tempstd,RH Temp Std Dev ($^{\circ}$C)
+licor_RHstd,RH Std Dev (%)
+licor_atm_xco2_dry,xCO$_2$ dry - Atmospheric 
+licor_o2sat,Oxygen Saturation (%)
+licor_o2std,O2 Sat Std Dev (%)
+licor_pres,Licor Pressure (kPa)
 licor_span_coeff,Licor Span Coefficients
-licor_sw_xco2_dry,xCO2 dry - Seawater
-licor_temp,Licor Temperature [C]
-licor_tempstd,Licor Temp Std Dev [C]
-licor_xco2,xCO2 unadjusted 
-licor_xco2std,xCO2 unadjusted Std Dev
+licor_sw_xco2_dry,xCO$_2$ dry - Seawater
+licor_temp,Licor Temperature ($^{\circ}$C)
+licor_tempstd,Licor Temp Std Dev ($^{\circ}$C)
+licor_xco2,xCO$_2$ unadjusted 
+licor_xco2std,xCO$_2$ unadjusted Std Dev
 licor_zero_coeff,Licor Zero Coefficients
+licor_pco2_equ, pCO$_{2}$ @ $T_{equ}$  ($\mu$atm)
+licor_pco2_atm, Atm pCO$_{2}$ @ $T_{atm}$  ($\mu$atm)
+licor_pco2_sea, Sea pCO$_{2}$ @ $T_{sea}$  ($\mu$atm)
+licor_fco2_atm, Atm fCO$_{2}$ @ $T_{atm}$  ($\mu$atm)
+licor_fco2_sea, Sea fCO$_{2}$ @ $T_{sea}$  ($\mu$atm)
+licor_Fco2, FCO$_{2}$ (sea-air) ($\mu$atm)
 prwl_cond,Conductivity
-prwl_pres,Prawler Pressure [kPa]
-prwl_temp,Sea Temperature [C]
-prwl_salt,Salinity [units]
-sb63_temp,SeaBird Temperature [C]
-wg_battery_logic,Battery - Logic [V]
-wg_battery_transmitter,Battery - Transmitter [V]
+prwl_pres,Prawler Pressure (kPa)
+prwl_temp,Sea Temperature ($^{\circ}$C)
+prwl_salt,Salinity (units)
+sb63_temp,SeaBird Temperature ($^{\circ}$C)
+wg_battery_logic,Battery - Logic (V)
+wg_battery_transmitter,Battery - Transmitter (V)
 wg_datenum,Date and Time
-wg_latitude,Latitude [deg N]
-wg_longitude,Longitude [deg E]
+wg_latitude,Latitude ($^{\circ}$ N)
+wg_longitude,Longitude ($^{\circ}$ E)

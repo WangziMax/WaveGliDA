@@ -89,14 +89,19 @@ def func_update_checkbox( self, event ):
 
 
 def func_read_selected( self, event ):
-
+    
     join = os.path.join
     all_list =  np.array(self.LB_Files.Items)
     selection = np.array(self.LB_Files.GetSelections())
     dir_path =  self.DirSelector.GetPath()
 
     file_list = [join(dir_path, fname) for fname in all_list[selection]]
-
+    
+    
+    NormCursor = self.MAIN.GetCursor()
+    BusyCursor = wx.StockCursor(wx.CURSOR_WAIT)
+    self.MAIN.SetCursor(BusyCursor)
+    
     self.data = read_wg_filelist(file_list,
                                  progress_obj=self.Files_Progress,
                                  statusbar_obj=self.StatusBar)
@@ -109,8 +114,8 @@ def func_read_selected( self, event ):
     self.TC_FileStatus.SetInsertionPoint(0)
     
     self.func_populate_datagrid( None )
-    #~ p = thread.start_new_thread(self.func_populate_datagrid, (None,))
-
+    
+    self.MAIN.SetCursor(NormCursor)
 
 def func_loaddata( self, event ):
 
@@ -136,12 +141,16 @@ def func_loaddata( self, event ):
         if key.startswith('Unnamed'):
             self.data.pop(key)
     
+    NormCursor = self.MAIN.GetCursor()
+    BusyCursor = wx.StockCursor(wx.CURSOR_WAIT)
+    self.MAIN.SetCursor(BusyCursor)
+    
     self.func_calc_salt( None )
     self.func_calc_co2( None )
     
     self.func_populate_datagrid( None )
-    #~ p = thread.start_new_thread(self.func_populate_datagrid, (None,))
-    #~ self.func_populate_datagrid()
+    
+    self.MAIN.SetCursor(NormCursor)
 
 
 def func_savedata( self, event ):

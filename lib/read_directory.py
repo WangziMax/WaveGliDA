@@ -94,10 +94,13 @@ def read_wg_filelist(file_list, progress_obj=None, statusbar_obj=None):
     dat = None
     for c, fullpath in enumerate(file_list):
         # adding file data to the dat info
-        if not dat:  # for the first iteration create the object
-            dat = read_wgfile(fullpath)
-        else:        # for following iterations append the data
-            dat = dat.append(read_wgfile(fullpath))
+        try:
+            if not dat:  # for the first iteration create the object
+                dat = read_wgfile(fullpath)
+            else:        # for following iterations append the data
+                dat = dat.append(read_wgfile(fullpath))
+        except:
+            statusbar_obj.SetStatusText('SKIPPED %s' % os.path.split(fullpath)[-1])
 
         if progress_obj:
             progress_obj.SetValue(c+1)

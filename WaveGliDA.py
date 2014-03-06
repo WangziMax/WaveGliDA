@@ -24,6 +24,8 @@ import wx
 import lib
 import numpy as np
 from lib.gui_main import Frame_MAIN
+from matplotlib import rcParams
+rcParams['mathtext.default'] = 'sf'
 
 def main():
     import os
@@ -46,7 +48,7 @@ class WavGliDaPro(Frame_MAIN):
          func_read_selected, func_populate_datagrid, func_savedata, func_select_files
     from lib.gui_calc_funcs import func_calc_salt, func_calc_co2
     from lib.gui_plot_funcs import func_populate_plot_choices, update_x_params, get_yidx,\
-         update_y1_params, update_y2_params, update_ylims, func_plotxy, update_xlims, \
+         update_y1_params, update_y2_params, update_ylims, update_xlims, \
          enable_y_properties, enable_plot_button, get_plot_properties
     from lib.plot_draw import func_plotxy
     from lib.gui_map_funcs import get_midx, update_m_params, func_update_mdates, \
@@ -56,8 +58,11 @@ class WavGliDaPro(Frame_MAIN):
 
     def init(self):
         
+        self.StatusBar.SetStatusText('Load data by selecting files using the buttons above')
+        
         # HELP FILES
         self.help_list = np.array([['About WavGliDA',        'About'],
+                                   ['Changes Log',           'ChangeLog'],
                                    ['Reading Files',         'ReadingFiles'],
                                    ['Saving and Loading',    'SavingReading'],
                                    ['Plotting',              'Plotting'],
@@ -84,6 +89,8 @@ class WavGliDaPro(Frame_MAIN):
         self.TC_FileStatus.SetFont(wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.LB_HELP.SetFont(      wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.GridData.SetDefaultCellFont(wx.Font( size_monospace-1, 74, 90, 90, False, font_monospace ) )
+        
+        self.StatusBar.SetFont(wx.Font( 13, 74, 90, 90, False, wx.EmptyString ) )
         
         if sys.platform.startswith('darwin') | sys.platform.startswith('win'):
             self.DirSelector.GetChildren( )[0].SetLabel('Load multiple raw files from a directory')

@@ -1,10 +1,10 @@
-WaveGliDA (0.4)
+WaveGliDA (0.5)
 ===============
 WAVe GLIder Data Analysis is a program to read, calculate and plot raw Wave Glider files. 
 For more info read the help and info files in this panel.
  
-* version:    0.3
-* date:       21 Feb 2014
+* version:    0.5 
+* date:       6 March 2014
 * author:     Luke Gregor
 * email:      luke.gregor@outlook.com
 

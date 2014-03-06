@@ -35,7 +35,7 @@ def func_plotxy(self, event):
     x_lims  = prop['x']['min'], prop['x']['max']
     y1_lims = prop['y1'].pop('min'), prop['y1'].pop('max')
 
-    plt.subplot(111)
+    plt.figure()
 
     if prop['x']['var'] == 'wg_datenum':
         plt.plot_date(x1, y1, **prop['y1'])
@@ -46,7 +46,7 @@ def func_plotxy(self, event):
 
     plt.xlim(x_lims)
     plt.ylim(y1_lims)
-    plt.ylabel(prop['y1']['label'], color=prop['y1']['color'])
+    plt.ylabel(prop['y1']['label'], color=prop['y1']['color'], size=14)
     plt.yticks(color=prop['y1']['color'])
 
     if prop.has_key('y2'):
@@ -63,7 +63,7 @@ def func_plotxy(self, event):
 
         plt.xlim(x_lims)
         plt.ylim(y2_lims)
-        plt.ylabel(prop['y2']['label'], color=prop['y2']['color'])
+        plt.ylabel(prop['y2']['label'], color=prop['y2']['color'], size=14)
         plt.yticks(color=prop['y2']['color'])
 
     plt.title(self.xy_title.GetValue())

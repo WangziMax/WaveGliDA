@@ -1,17 +1,18 @@
 CO2 Calculations
 ================
-*** UNDER CONSTRUCTION -- CURRENTLY NOT WORKING ***
 
 The CO2 calculations are shown by function. See './doc/calc_co2.py' for more
 
 
-xCO2 from raw voltages (calc_xco2_raw)
---------------------------------------
+---------------------------------------
+ xCO2 from raw voltages (calc_xco2_raw)
+---------------------------------------
 Calculates the mole fraction of CO2 (xCO2) from the raw voltage measurements made by the Wave Glider's Licor unit. This script has been adapted from the Uni Washington's VB script. 
 
 
-Dry xCO2 (calc_xco2_dry)
-------------------------
+-------------------------
+ Dry xCO2 (calc_xco2_dry)
+-------------------------
 Applies a correction for relative humidity to the mole fraction of CO2 (xCO2). The output is saved as licor_xco2_dry_sw
 
 The saturation vapour pressure of water is calculated for the Licor. The relative vapour pressure is then calculated by getting the difference in relative humidity for seawater samples and span samples. xCO2 is divided by this factor.
@@ -19,8 +20,9 @@ The saturation vapour pressure of water is calculated for the Licor. The relativ
 This script is based on the VB script by Uni Washington. 
 
 
-Calculate pCO2 (calc_pco2)
---------------------------
+---------------------------
+ Calculate pCO2 (calc_pco2)
+---------------------------
 Accounts for the water vapour pressure in a sample of air and calculates pCO2 at seawater temperature.
 
 When measuring CO2 it is assumed that it is measured at 100% relative humidity (RH) or saturated vapour pressure (VP). However, we measure CO2 at a certain RH and calculate the dry mole fraction from this. This function calculatees the vapour pressure factor which is multilplied with dry xCO2 to get pCO2.
@@ -30,8 +32,9 @@ Finally the pCO2 is corrected for equilibrator vs seawater temperatures using th
 This script is based on the CO2SYS script originally by Lewis and Wallace 1998. Weiss and Price (1980) in Marine Chemistry referenced by CO2SYS. If you'd like to calculate pCO2 from any xCO2 (not necessarily dry) it is the product of the pressure in the measureing chamber and xCO2. 
 
 
-Fugacity of CO2 (calc_fco2)
----------------------------
+----------------------------
+ Fugacity of CO2 (calc_fco2)
+----------------------------
 This script calculates the fugacity of CO2. This script is based on the Fugacity Factor calculation in the CO2SYS script originally by Lewis and Wallace 1998. Requires pCO2 and temperature in degC for inputs.
 
 The fugacity of CO2 is calculating by finding the Fugacity Factor. This is based on Weiss, R. F., Marine Chemistry 2:203-215, 1974. 

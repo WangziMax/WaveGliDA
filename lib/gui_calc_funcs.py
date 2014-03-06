@@ -28,18 +28,16 @@ def func_calc_salt( self, event ):
 
 def func_calc_co2( self, event ):
 
-    #~ info_str = ("Sadly this button does nothing."
-                #~ "\nIn the future this button will calculate pCO2, fCO2 and FCO2")
-    #~ dlg = wx.MessageDialog(self, info_str,'Under Construction', wx.ICON_INFORMATION)
-    #~ dlg.ShowModal()
-    #~ dlg.Destroy()
-
-
+    self.StatusBar.SetStatusText('calculating CO2 parameters...')
+    
+    if 'licor_pco2_sea' in self.data.keys():
+        return None
+    
     from calc_co2 import calc_xco2_dry, calc_pco2, calc_fco2
-
+    
     col_names = ('licor_xco2', 'licor_pres', 'licor_RH_temp', 'licor_RH',
                  'licor_temp', 'licor_cmnd', 'prwl_temp', 'prwl_salt')
-                 
+    
     # this step is NB as variables need to be numpy arrays NOT DataFrame
     col_dict = pdDataFrame_2_numpy(self.data, col_names)
     globals().update(col_dict)
@@ -64,24 +62,28 @@ def func_calc_co2( self, event ):
     # Calculate pCO2
     pco2_equ = Series(None, index=self.data.index)
     pco2 = Series(None, index=self.data.index)
-    pco2_equ, pco2 = calc_pco2(licor_xco2dry,
-                                   licor_temp,
-                                   prwl_salt,
-                                   prwl_temp)
+    pco2_equ, pco2 = calc_pco2(licor_xco2dry, licor_temp, prwl_salt, prwl_temp)
+    pco2_atm = np.array(pco2)[iatm].repeat(10)
+    pco2_sea = np.array(pco2)[iequ].repeat(10)
 
     # Calculate fCO2
     fco2 = Series(None, index=self.data.index)
     fco2 = calc_fco2(pco2, prwl_temp)
-
+    fco2_atm = np.array(fco2)[iatm].repeat(10)
+    fco2_sea = np.array(fco2)[iequ].repeat(10)
+    
+    # Calculate delta fco2
+    dco2 = fco2_sea - fco2_atm
     
     i = np.where([key.startswith('licor') for key in self.data.keys()])[0].max() + 1
+    
     self.data.insert(i,   'licor_xco2dry', licor_xco2dry)
     self.data.insert(i+1, 'licor_pco2_equ', pco2_equ)
-    self.data.insert(i+1, 'licor_pco2', pco2)
-    self.data.insert(i+2, 'licor_fco2', fco2)
+    self.data.insert(i+2, 'licor_pco2_atm', pco2_atm)
+    self.data.insert(i+3, 'licor_pco2_sea', pco2_sea)
+    self.data.insert(i+4, 'licor_fco2_atm', fco2_atm)
+    self.data.insert(i+5, 'licor_fco2_sea', fco2_sea)
+    self.data.insert(i+6, 'licor_Fco2', dco2)
     self.StatusBar.SetStatusText('')
     
-    self.BTN_calcCO2.SetLabel('CO2 parameters have been calculated')
-    self.BTN_calcCO2.Enable(False)
-    self.GridData.Scroll(1e3, 0)
-
+    
