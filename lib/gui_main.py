@@ -99,7 +99,7 @@ class Frame_MAIN ( wx.Frame ):
 		
 		bSizer32.Add( self.DirSelector, 1, wx.ALL|wx.EXPAND, 5 )
 		
-		self.BTN_LoadFile = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"Wave Glider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_FILE_MUST_EXIST|wx.FLP_OPEN )
+		self.BTN_LoadFile = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"Wave Glider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OPEN )
 		self.BTN_LoadFile.SetToolTipString( u"Load a previously saved file (*wg.csv)" )
 		
 		bSizer32.Add( self.BTN_LoadFile, 1, wx.ALL, 5 )
@@ -167,13 +167,13 @@ class Frame_MAIN ( wx.Frame ):
 		self.NBPanel_FileSelection.SetSizer( Sizer_FileSelection )
 		self.NBPanel_FileSelection.Layout()
 		Sizer_FileSelection.Fit( self.NBPanel_FileSelection )
-		self.MAIN.AddPage( self.NBPanel_FileSelection, u"File Selection", True )
+		self.MAIN.AddPage( self.NBPanel_FileSelection, u"File Selection", False )
 		self.NBPanel_Data = wx.Panel( self.MAIN, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer33 = wx.BoxSizer( wx.VERTICAL )
 		
 		bSizer34 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.BTN_SaveFile = wx.FilePickerCtrl( self.NBPanel_Data, wx.ID_ANY, u"test", u"Enter a filename *.wg.csv", u"WaveGlider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OVERWRITE_PROMPT|wx.FLP_SAVE )
+		self.BTN_SaveFile = wx.FilePickerCtrl( self.NBPanel_Data, wx.ID_ANY, wx.EmptyString, u"Enter a filename *.wg.csv", u"WaveGlider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_SAVE )
 		self.BTN_SaveFile.Enable( False )
 		
 		bSizer34.Add( self.BTN_SaveFile, 1, wx.ALL, 5 )
@@ -213,7 +213,8 @@ class Frame_MAIN ( wx.Frame ):
 		self.GridData.SetLabelFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
 		
 		# Cell Defaults
-		self.GridData.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
+		self.GridData.SetDefaultCellFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
+		self.GridData.SetDefaultCellAlignment( wx.ALIGN_RIGHT, wx.ALIGN_TOP )
 		self.GridData.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
 		
 		bSizer33.Add( self.GridData, 1, wx.ALL|wx.EXPAND, 5 )
@@ -222,7 +223,7 @@ class Frame_MAIN ( wx.Frame ):
 		self.NBPanel_Data.SetSizer( bSizer33 )
 		self.NBPanel_Data.Layout()
 		bSizer33.Fit( self.NBPanel_Data )
-		self.MAIN.AddPage( self.NBPanel_Data, u"Data", False )
+		self.MAIN.AddPage( self.NBPanel_Data, u"Data", True )
 		self.NBPanel_TimeSeries = wx.Panel( self.MAIN, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		Sizer_XYPlots = wx.BoxSizer( wx.VERTICAL )
 		

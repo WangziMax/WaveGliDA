@@ -63,9 +63,6 @@ class WavGliDaPro(Frame_MAIN):
                                    ['Plotting',              'Plotting'],
                                    ['CO2 Calculations',      'CO2calculations'],
                                    ]).T
-        self.DirSelector.GetChildren( )[0].SetLabel('Load multiple raw files from a directory')
-        self.BTN_LoadFile.GetChildren()[0].SetLabel('Load previously saved file')
-        self.BTN_SaveFile.GetChildren()[0].SetLabel('Save data as *.csv')
         
         lib.list_2_ListBox(self.LB_HELP, self.help_list)
 
@@ -73,12 +70,12 @@ class WavGliDaPro(Frame_MAIN):
         # SET FONTS
         if sys.platform.startswith('win'):
             font_monospace = "Lucida Sans Typewriter"
-            size_monospace = 10
+            size_monospace = 9
         elif sys.platform.startswith('darwin'):
             font_monospace = "Monaco"
             size_monospace = 10
-        else:
-            font_monospace = "Monaco"
+        elif sys.platform.startswith('lin'):
+            font_monospace = "Monospace"
             size_monospace = 10
         
         self.LB_Files.SetFont(     wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
@@ -86,8 +83,15 @@ class WavGliDaPro(Frame_MAIN):
         self.LB_Files.SetFont(     wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.TC_FileStatus.SetFont(wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.LB_HELP.SetFont(      wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
-    
-
+        self.GridData.SetDefaultCellFont(wx.Font( size_monospace-1, 74, 90, 90, False, font_monospace ) )
+        self.GridData.SetLabelFont(      wx.Font( size_monospace-1, 74, 90, 90, False, font_monospace ) )
+        
+        if sys.platform.startswith('darwin') | sys.platform.startswith('win'):
+            self.DirSelector.GetChildren( )[0].SetLabel('Load multiple raw files from a directory')
+            self.BTN_LoadFile.GetChildren()[0].SetLabel('Load previously saved file')
+        self.BTN_SaveFile.GetChildren()[0].SetLabel('Save data as *.csv')
+        
+        
 if __name__ == "__main__":
 
     main()

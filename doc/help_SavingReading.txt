@@ -3,9 +3,7 @@ LOADING AND SAVING DATA
 
 It is possible to save data that has been imported. This is done from the 'Data' tab.
 
-The following formats are supported:
-    CSV         Comma Seperated Values [default]
-    MAT         MATLAB data file
+Data can be saved as a comma seperated value. The program preempts a filename (current date and time) when saving. The extension is *.wg.csv. The first extension identifies the file as a wave glider data file that can later be read in by the WaveGliDA program.
 
 Data that has been processed and saved as one of these formats can also be loaded directly. 
 
