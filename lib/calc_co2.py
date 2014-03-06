@@ -67,7 +67,7 @@ def calc_xco2_raw(raw1, raw2, temp, pres, coeff_zero, coeff_span):
 
     xCO2_raw = 10 * f * ((t + 273) / (t_std + 273))
 
-    return xCO2_raw
+    return xCO2_raw.round(3)
 
 
 def calc_xco2_dry(xco2_raw, pres, rh_temp, rh_equil, rh_span):
@@ -89,7 +89,7 @@ def calc_xco2_dry(xco2_raw, pres, rh_temp, rh_equil, rh_span):
 
     xco2_dry = xco2_raw / ((pres - vaporpres) / pres)
 
-    return xco2_dry
+    return xco2_dry.round(3)
 
 
 def calc_pco2(xco2_dry, TempC_equ, Salt, TempC_sea):
@@ -144,7 +144,7 @@ def calc_pco2(xco2_dry, TempC_equ, Salt, TempC_sea):
     pco2_sea = pco2_equ * exp(0.0423 * (TempC_sea - TempC_equ))
 
 
-    return pco2_sea
+    return pco2_sea.round(3)
 
 
 def calc_fco2(pco2, tempC):
@@ -183,7 +183,7 @@ def calc_fco2(pco2, tempC):
 
     fco2 = pco2 * fugfac
 
-    return fco2
+    return fco2.round(3)
 
 if __name__ == "__main__":
 

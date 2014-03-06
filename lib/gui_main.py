@@ -183,6 +183,7 @@ class Frame_MAIN ( wx.Frame ):
 		
 		self.BTN_calcCO2 = wx.Button( self.NBPanel_Data, wx.ID_ANY, u"Calculate pCO2 / fCO2", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.BTN_calcCO2.Enable( False )
+		self.BTN_calcCO2.Hide()
 		
 		bSizer34.Add( self.BTN_calcCO2, 1, wx.ALL, 5 )
 		

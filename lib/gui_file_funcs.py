@@ -18,11 +18,12 @@ class HugeTable(wxGrid.PyGridTableBase):
     def __init__(self, pdDataFrame):
         wxGrid.PyGridTableBase.__init__(self)
         
-        self.rowLabels = pdDataFrame.index.values
+        datetimes = pdDataFrame.index.to_datetime()
+        self.rowLabels = [d.strftime('%Y-%m-%d    %H:%M') for d in datetimes]
 
         self.colLabels = pdDataFrame.keys()
 
-        self.data = pdDataFrame.values.astype(str)
+        self.data = pdDataFrame.values
         
     def GetAttr(self, row, col, kind ):
         attr = wxGrid.GridCellAttr()
@@ -101,12 +102,14 @@ def func_read_selected( self, event ):
                                  statusbar_obj=self.StatusBar)
     
     self.func_calc_salt( None )
+    self.func_calc_co2 ( None )
     
     self.TC_FileStatus.Clear()
     self.TC_FileStatus.AppendText(self.data.__str__())
     self.TC_FileStatus.SetInsertionPoint(0)
     
-    p = thread.start_new_thread(self.func_populate_datagrid, (None,))
+    self.func_populate_datagrid( None )
+    #~ p = thread.start_new_thread(self.func_populate_datagrid, (None,))
 
 
 def func_loaddata( self, event ):
@@ -134,8 +137,10 @@ def func_loaddata( self, event ):
             self.data.pop(key)
     
     self.func_calc_salt( None )
+    self.func_calc_co2( None )
     
-    p = thread.start_new_thread(self.func_populate_datagrid, (None,))
+    self.func_populate_datagrid( None )
+    #~ p = thread.start_new_thread(self.func_populate_datagrid, (None,))
     #~ self.func_populate_datagrid()
 
 
@@ -157,7 +162,6 @@ def func_populate_datagrid( self, event ):
 
     self.StatusBar.SetStatusText('loading data into spreadsheet...')
     self.Files_Progress.SetValue(0)
-    datetimes = self.data.index.to_datetime()
     
     table = HugeTable(self.data)
     
@@ -166,6 +170,7 @@ def func_populate_datagrid( self, event ):
     self.StatusBar.SetStatusText('')
 
     self.BTN_SaveFile.Enable()
+    self.BTN_calcCO2.Enable()
     self.BTN_SaveFile.SetPath('%s.wg.csv' % datetime.today().strftime('%Y%m%d_%H%M'))
     
     self.func_populate_plot_choices()
