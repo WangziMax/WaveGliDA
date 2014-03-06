@@ -84,7 +84,6 @@ class WavGliDaPro(Frame_MAIN):
         self.TC_FileStatus.SetFont(wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.LB_HELP.SetFont(      wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.GridData.SetDefaultCellFont(wx.Font( size_monospace-1, 74, 90, 90, False, font_monospace ) )
-        self.GridData.SetLabelFont(      wx.Font( size_monospace-1, 74, 90, 90, False, font_monospace ) )
         
         if sys.platform.startswith('darwin') | sys.platform.startswith('win'):
             self.DirSelector.GetChildren( )[0].SetLabel('Load multiple raw files from a directory')

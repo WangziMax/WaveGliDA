@@ -167,7 +167,7 @@ class Frame_MAIN ( wx.Frame ):
 		self.NBPanel_FileSelection.SetSizer( Sizer_FileSelection )
 		self.NBPanel_FileSelection.Layout()
 		Sizer_FileSelection.Fit( self.NBPanel_FileSelection )
-		self.MAIN.AddPage( self.NBPanel_FileSelection, u"File Selection", False )
+		self.MAIN.AddPage( self.NBPanel_FileSelection, u"File Selection", True )
 		self.NBPanel_Data = wx.Panel( self.MAIN, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer33 = wx.BoxSizer( wx.VERTICAL )
 		
@@ -206,7 +206,7 @@ class Frame_MAIN ( wx.Frame ):
 		
 		# Rows
 		self.GridData.EnableDragRowSize( True )
-		self.GridData.SetRowLabelSize( 80 )
+		self.GridData.SetRowLabelSize( 120 )
 		self.GridData.SetRowLabelAlignment( wx.ALIGN_CENTRE, wx.ALIGN_CENTRE )
 		
 		# Label Appearance
@@ -223,7 +223,7 @@ class Frame_MAIN ( wx.Frame ):
 		self.NBPanel_Data.SetSizer( bSizer33 )
 		self.NBPanel_Data.Layout()
 		bSizer33.Fit( self.NBPanel_Data )
-		self.MAIN.AddPage( self.NBPanel_Data, u"Data", True )
+		self.MAIN.AddPage( self.NBPanel_Data, u"Data", False )
 		self.NBPanel_TimeSeries = wx.Panel( self.MAIN, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		Sizer_XYPlots = wx.BoxSizer( wx.VERTICAL )
 		

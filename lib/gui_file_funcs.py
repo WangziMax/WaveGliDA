@@ -10,7 +10,43 @@ import os
 from datetime import datetime
 from pandas import read_csv
 import wx
+import thread
+import wx.grid as wxGrid
 
+    
+class HugeTable(wxGrid.PyGridTableBase):
+    def __init__(self, pdDataFrame):
+        wxGrid.PyGridTableBase.__init__(self)
+        
+        self.rowLabels = pdDataFrame.index.values
+
+        self.colLabels = pdDataFrame.keys()
+
+        self.data = pdDataFrame.values.astype(str)
+        
+    def GetAttr(self, row, col, kind ):
+        attr = wxGrid.GridCellAttr()
+        attr.SetReadOnly( 1 )
+        return attr
+        
+    def GetNumberRows(self):
+        return len(self.data)
+
+    def GetNumberCols(self):
+        return len(self.data[0])
+
+    def GetValue(self, row, col):
+        return self.data[row][col]
+
+    #~ # Called when the grid needs to display column labels               
+    def GetColLabelValue(self, col):
+        return self.colLabels[col]
+
+    #~ # Called when the grid needs to display row labels
+    def GetRowLabelValue(self,row):
+        return self.rowLabels[row]
+
+        
 
 def func_listfiles(self, event):
     wg_dir = self.DirSelector.GetPath()
@@ -69,7 +105,8 @@ def func_read_selected( self, event ):
     self.TC_FileStatus.Clear()
     self.TC_FileStatus.AppendText(self.data.__str__())
     self.TC_FileStatus.SetInsertionPoint(0)
-    self.func_populate_datagrid()
+    
+    p = thread.start_new_thread(self.func_populate_datagrid, (None,))
 
 
 def func_loaddata( self, event ):
@@ -98,8 +135,8 @@ def func_loaddata( self, event ):
     
     self.func_calc_salt( None )
     
-    self.func_populate_datagrid()
-#        self.func_calc_salt(None)
+    p = thread.start_new_thread(self.func_populate_datagrid, (None,))
+    #~ self.func_populate_datagrid()
 
 
 def func_savedata( self, event ):
@@ -116,50 +153,20 @@ def func_savedata( self, event ):
     
 
 
-def func_populate_datagrid( self ):
+def func_populate_datagrid( self, event ):
 
     self.StatusBar.SetStatusText('loading data into spreadsheet...')
     self.Files_Progress.SetValue(0)
     datetimes = self.data.index.to_datetime()
     
-    while len(self.data.keys()) >= self.GridData.NumberCols:
-        self.GridData.AppendCols()
-    while len(self.data.keys()) < self.GridData.NumberCols:
-        self.GridData.DeleteCols()
-    while len(datetimes) >= self.GridData.NumberRows:
-        self.GridData.AppendRows()
-    while len(datetimes) < self.GridData.NumberRows:
-        self.GridData.DeleteRows()
-
-    for c, col in enumerate(self.data.iteritems()):
-        self.GridData.SetColLabelValue(c, col[0])
-    for r, dt in enumerate(datetimes):
-        self.GridData.SetRowLabelValue(r, dt.strftime('%Y-%m-%d  %H:%M'))
-
-    self.GridData.AutoSizeColumns()
-    self.GridData.SetRowLabelSize(120)
-
-    data = self.data.values.astype(str)
-    Grid = self.GridData
-
-    R, C = data.shape
-    n = int(R * C)
-    i, j = 1, 1
-    for c in range(C):
-        for r in np.arange(R):
-            Grid.SetCellValue(r, c, data[r,c])
-            
-            if (i % (n/100) ) == 0:
-                self.Files_Progress.SetValue(j)
-                j +=1
-            i+=1
-            
+    table = HugeTable(self.data)
+    
+    self.GridData.SetTable(table, True)
+    
+    self.StatusBar.SetStatusText('')
 
     self.BTN_SaveFile.Enable()
     self.BTN_SaveFile.SetPath('%s.wg.csv' % datetime.today().strftime('%Y%m%d_%H%M'))
-    self.StatusBar.SetStatusText('')
+    
     self.func_populate_plot_choices()
     self.func_populate_map_choices()
-
-    
-    
