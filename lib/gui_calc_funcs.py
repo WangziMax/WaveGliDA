@@ -30,7 +30,7 @@ def func_calc_co2( self, event ):
 
     self.StatusBar.SetStatusText('calculating CO2 parameters...')
     
-    if 'licor_pco2_sea' in self.data.keys():
+    if 'licor_xco2dry' in self.data.keys():
         return None
     
     from calc_co2 import calc_xco2_dry, calc_pco2, calc_fco2

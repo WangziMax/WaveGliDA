@@ -12,6 +12,7 @@ from pandas import read_csv
 import wx
 import thread
 import wx.grid as wxGrid
+import time
 
     
 class HugeTable(wxGrid.PyGridTableBase):
@@ -189,16 +190,21 @@ def func_loaddata( self, event ):
 
 
 def func_savedata( self, event ):
-
+    
+    self.func_export_opts( None )
     fullpath = self.BTN_SaveFile.GetPath()
     file_ext = os.path.splitext(fullpath)
     if file_ext[-1] == '.csv':
-        self.data.to_csv(fullpath)
+        self.data.ix[self.save_ind,:].to_csv(fullpath)
         
-    elif file_ext[-1] == '.mat':
-        from scipy.io import savemat
-        save_dict = dict( zip( self.data.keys(), self.data.values.T ) )
-        savemat(fullpath, save_dict)
+        self.StatusBar.SetStatusText('File saved as %s' % fullpath)
+        clear_status_text( self )
+    
+    #~ elif file_ext[-1] == '.mat':
+        #~ from scipy.io import savemat
+        #~ save_dict = dict( zip( self.data.keys(), self.data.values.T ) )
+        #~ savemat(fullpath, save_dict)
+    
     
 
 
@@ -214,8 +220,30 @@ def func_populate_datagrid( self, event ):
     self.StatusBar.SetStatusText('')
 
     self.BTN_SaveFile.Enable()
-    self.BTN_calcCO2.Enable()
     self.BTN_SaveFile.SetPath('%s.wg.csv' % datetime.today().strftime('%Y%m%d_%H%M'))
     
     self.func_populate_plot_choices()
     self.func_populate_map_choices()
+    
+    
+def func_export_opts( self, event ):
+    
+    rb_s = self.RB_ExportOpts.GetSelection()
+    selected_item = self.RB_ExportOpts.GetItemLabel(rb_s)
+    if selected_item == 'all rows':
+        bool_func = lambda s: np.isrealobj(s)
+    elif selected_item == 'pump_off':
+        bool_func = lambda s: s.endswith('pump_off')
+    else:
+        bool_func = lambda s: s == selected_item
+    
+    self.save_ind = np.array( map( bool_func, self.data.licor_cmnd ) )
+    
+    self.StatusBar.SetStatusText("'%s' chosen (%d items)" % (selected_item, np.sum(self.save_ind)))
+    
+    thread.start_new_thread(clear_status_text, (self,))
+
+
+def clear_status_text( self ):
+    time.sleep(2)
+    self.StatusBar.SetStatusText('')

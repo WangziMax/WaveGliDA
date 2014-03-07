@@ -175,17 +175,39 @@ class Frame_MAIN ( wx.Frame ):
 		
 		self.BTN_SaveFile = wx.FilePickerCtrl( self.NBPanel_Data, wx.ID_ANY, wx.EmptyString, u"Enter a filename *.wg.csv", u"WaveGlider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_SAVE )
 		self.BTN_SaveFile.Enable( False )
+		self.BTN_SaveFile.SetToolTipString( u"Save data in CSV format. The extension of saved files is *.wg.csv and can be read by Excel." )
 		
-		bSizer34.Add( self.BTN_SaveFile, 1, wx.ALL, 5 )
+		bSizer34.Add( self.BTN_SaveFile, 1, wx.ALL|wx.EXPAND, 8 )
 		
-		self.m_staticline1 = wx.StaticLine( self.NBPanel_Data, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
-		bSizer34.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )
+		RB_ExportOptsChoices = [ u"all rows", u"pump_off", u"equil_pump_off" ]
+		self.RB_ExportOpts = wx.RadioBox( self.NBPanel_Data, wx.ID_ANY, u"Export Options (select rows to export)", wx.DefaultPosition, wx.DefaultSize, RB_ExportOptsChoices, 1, wx.RA_SPECIFY_ROWS )
+		self.RB_ExportOpts.SetSelection( 0 )
+		self.RB_ExportOpts.SetToolTipString( u"When saving data only the seleccted rows are exported:\n \nall rows   -   every single row (save in this format for later use in WaveGliDA)\npump_off   -   only the rows from which measurements are used\nequ_pump_off   -   only the rows used in pCO2 data (note that this also saves ATM data)\n\nNote that selections will not be shown in the table below. " )
 		
-		self.BTN_calcCO2 = wx.Button( self.NBPanel_Data, wx.ID_ANY, u"Calculate pCO2 / fCO2", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.BTN_calcCO2.Enable( False )
-		self.BTN_calcCO2.Hide()
+		bSizer34.Add( self.RB_ExportOpts, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		bSizer34.Add( self.BTN_calcCO2, 1, wx.ALL, 5 )
+		sbSizer101 = wx.StaticBoxSizer( wx.StaticBox( self.NBPanel_Data, wx.ID_ANY, u"Data Filters (under construction)" ), wx.HORIZONTAL )
+		
+		m_choice12Choices = [ u"select variable" ]
+		self.m_choice12 = wx.Choice( self.NBPanel_Data, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_choice12Choices, 0 )
+		self.m_choice12.SetSelection( 0 )
+		self.m_choice12.Enable( False )
+		
+		sbSizer101.Add( self.m_choice12, 3, wx.ALL, 5 )
+		
+		self.m_button9 = wx.Button( self.NBPanel_Data, wx.ID_ANY, u"Apply Filter", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_button9.Enable( False )
+		
+		sbSizer101.Add( self.m_button9, 2, wx.ALL, 5 )
+		
+		self.m_button10 = wx.Button( self.NBPanel_Data, wx.ID_ANY, u"?", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_button10.Enable( False )
+		self.m_button10.SetToolTipString( u"how do filters work?" )
+		
+		sbSizer101.Add( self.m_button10, 1, wx.ALL, 5 )
+		
+		
+		bSizer34.Add( sbSizer101, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		
 		bSizer33.Add( bSizer34, 0, wx.EXPAND, 5 )
@@ -944,7 +966,7 @@ class Frame_MAIN ( wx.Frame ):
 		self.LB_Files.Bind( wx.EVT_LISTBOX, self.func_update_checkbox )
 		self.Button_ReadFiles.Bind( wx.EVT_BUTTON, self.func_read_selected )
 		self.BTN_SaveFile.Bind( wx.EVT_FILEPICKER_CHANGED, self.func_savedata )
-		self.BTN_calcCO2.Bind( wx.EVT_BUTTON, self.func_calc_co2 )
+		self.RB_ExportOpts.Bind( wx.EVT_RADIOBOX, self.func_export_opts )
 		self.x_var.Bind( wx.EVT_CHOICE, self.update_x_params )
 		self.x_minslide.Bind( wx.EVT_SCROLL, self.update_xlims )
 		self.x_maxslide.Bind( wx.EVT_SCROLL, self.update_xlims )
@@ -995,7 +1017,7 @@ class Frame_MAIN ( wx.Frame ):
 	def func_savedata( self, event ):
 		event.Skip()
 	
-	def func_calc_co2( self, event ):
+	def func_export_opts( self, event ):
 		event.Skip()
 	
 	def update_x_params( self, event ):
@@ -1039,4 +1061,3 @@ class Frame_MAIN ( wx.Frame ):
 	def func_plot_map( self, event ):
 		event.Skip()
 	
-

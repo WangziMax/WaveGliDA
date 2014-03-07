@@ -30,7 +30,8 @@ class WavGliDaPro(Frame_MAIN):
 
     from lib.gui_help_funcs import func_update_help
     from lib.gui_file_funcs import func_listfiles, func_update_checkbox, func_loaddata, \
-         func_read_selected, func_populate_datagrid, func_savedata, func_select_files
+         func_read_selected, func_populate_datagrid, func_savedata, func_select_files, \
+         func_export_opts
     from lib.gui_calc_funcs import func_calc_salt, func_calc_co2
     from lib.gui_plot_funcs import func_populate_plot_choices, update_x_params, get_yidx,\
          update_y1_params, update_y2_params, update_ylims, update_xlims, \
