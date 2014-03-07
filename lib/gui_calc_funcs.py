@@ -73,7 +73,7 @@ def func_calc_co2( self, event ):
     fco2_sea = np.array(fco2)[iequ].repeat(10)
     
     # Calculate delta fco2
-    dco2 = fco2_sea - fco2_atm
+    dfco2 = fco2_sea - fco2_atm
     
     i = np.where([key.startswith('licor') for key in self.data.keys()])[0].max() + 1
     
@@ -83,7 +83,7 @@ def func_calc_co2( self, event ):
     self.data.insert(i+3, 'licor_pco2_sea', pco2_sea)
     self.data.insert(i+4, 'licor_fco2_atm', fco2_atm)
     self.data.insert(i+5, 'licor_fco2_sea', fco2_sea)
-    self.data.insert(i+6, 'licor_Fco2', dco2)
+    self.data.insert(i+6, 'licor_dfco2', dfco2)
     self.StatusBar.SetStatusText('')
     
     

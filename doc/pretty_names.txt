@@ -20,7 +20,7 @@ licor_pco2_atm, Atm pCO$_{2}$ @ $T_{atm}$  ($\mu$atm)
 licor_pco2_sea, Sea pCO$_{2}$ @ $T_{sea}$  ($\mu$atm)
 licor_fco2_atm, Atm fCO$_{2}$ @ $T_{atm}$  ($\mu$atm)
 licor_fco2_sea, Sea fCO$_{2}$ @ $T_{sea}$  ($\mu$atm)
-licor_Fco2, FCO$_{2}$ (sea-air) ($\mu$atm)
+licor_dfco2, $\Delta$fCO$_{2}$ (sea-air) ($\mu$atm)
 prwl_cond,Conductivity
 prwl_pres,Prawler Pressure (kPa)
 prwl_temp,Sea Temperature ($^{\circ}$C)
