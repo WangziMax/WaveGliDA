@@ -15,7 +15,7 @@ import wx.grid as wxGrid
 import time
 
     
-class HugeTable(wxGrid.PyGridTableBase):
+class HugeTble(wxGrid.PyGridTableBase):
     def __init__(self, pdDataFrame):
         wxGrid.PyGridTableBase.__init__(self)
         
@@ -221,6 +221,7 @@ def func_populate_datagrid( self, event ):
 
     self.BTN_SaveFile.Enable()
     self.BTN_SaveFile.SetPath('%s.wg.csv' % datetime.today().strftime('%Y%m%d_%H%M'))
+    self.RB_ExportOpts.Enable()
     
     self.func_populate_plot_choices()
     self.func_populate_map_choices()
@@ -247,3 +248,5 @@ def func_export_opts( self, event ):
 def clear_status_text( self ):
     time.sleep(2)
     self.StatusBar.SetStatusText('')
+    
+    

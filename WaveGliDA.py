@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-__version__ = 0.5
+
+__author__ = "Luke Gregor"
+__version__ = "0.5"
+__release_date__ = "2014-03-08"
+
 
 from matplotlib import use as mpl_use
 mpl_use('WXAgg')
@@ -16,17 +20,20 @@ def main():
     import os
     path = os.path.dirname(os.path.realpath(__file__))
     os.chdir(path)
-    app = wx.App(0)
+    
+    app = wx.App( redirect=1 )
+    app.outputWindowClass = MyOutputWindow
+    
     frame = WavGliDaPro(None)
 
     frame.init()
-
     frame.Show()
     app.MainLoop()
+    
+    sys.exit(1)
 
 
 class WavGliDaPro(Frame_MAIN):
-
 
     from lib.gui_help_funcs import func_update_help
     from lib.gui_file_funcs import func_listfiles, func_update_checkbox, func_loaddata, \
@@ -40,8 +47,9 @@ class WavGliDaPro(Frame_MAIN):
     from lib.gui_map_funcs import get_midx, update_m_params, func_update_mdates, \
          trigger_m, func_populate_map_choices, get_map_properties, func_m_global_limits
     from lib.map_draw import func_plot_map
-
-
+    
+    
+        
     def init(self):
         
         self.StatusBar.SetStatusText('Load data by selecting files using the buttons above')
@@ -82,8 +90,32 @@ class WavGliDaPro(Frame_MAIN):
             self.DirSelector.GetChildren( )[0].SetLabel('Load multiple raw files from a directory')
             self.BTN_LoadFile.GetChildren()[0].SetLabel('Load previously saved file')
         self.BTN_SaveFile.GetChildren()[0].SetLabel('Save data as *.csv')
+        self.RB_ExportOpts.Disable()
+
+
+class MyOutputWindow( wx.PyOnDemandOutputWindow ) :
+
+    def __init__( self ) :
         
+        wx.PyOnDemandOutputWindow.__init__( self )
         
+        self.origStdout = sys.stderr
+    
+    def CreateOutputWindow(self, st):
+        self.frame = wx.Frame(self.parent, -1, self.title, self.pos, self.size,
+                              style=wx.DEFAULT_FRAME_STYLE)
+        self.text  = wx.TextCtrl(self.frame, -1, "Test",
+                                 style=wx.TE_MULTILINE|wx.TE_READONLY)
+        
+        self.text.AppendText('\n'
+                             '\n----------------------------'
+                             '\nSEND THE FOLLOWING ERROR TO'
+                             '\n   luke.gregor@outlook.com' )
+        self.text.AppendText(st)
+        self.frame.Show(True)
+        self.frame.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+        
+
 if __name__ == "__main__":
 
     main()

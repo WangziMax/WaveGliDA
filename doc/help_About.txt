@@ -12,12 +12,12 @@ email:      luke.gregor@outlook.com
 
 
 
-
-
 -----------
  TO DO
 -----------
  * Need to check the input temperature for pCO2(atm) and fCO2(atm)
+ * Durafet pH
+ * SBE dissolved oxygen
  * Help for the maps
  * Glider speed
  * Standard plots for xyplots
