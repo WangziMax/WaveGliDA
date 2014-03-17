@@ -186,29 +186,6 @@ class Frame_MAIN ( wx.Frame ):
 		
 		bSizer34.Add( self.RB_ExportOpts, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		sbSizer101 = wx.StaticBoxSizer( wx.StaticBox( self.NBPanel_Data, wx.ID_ANY, u"Data Filters (under construction)" ), wx.HORIZONTAL )
-		
-		m_choice12Choices = [ u"select variable" ]
-		self.m_choice12 = wx.Choice( self.NBPanel_Data, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, m_choice12Choices, 0 )
-		self.m_choice12.SetSelection( 0 )
-		self.m_choice12.Enable( False )
-		
-		sbSizer101.Add( self.m_choice12, 3, wx.ALL, 5 )
-		
-		self.m_button9 = wx.Button( self.NBPanel_Data, wx.ID_ANY, u"Apply Filter", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_button9.Enable( False )
-		
-		sbSizer101.Add( self.m_button9, 2, wx.ALL, 5 )
-		
-		self.m_button10 = wx.Button( self.NBPanel_Data, wx.ID_ANY, u"?", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_button10.Enable( False )
-		self.m_button10.SetToolTipString( u"how do filters work?" )
-		
-		sbSizer101.Add( self.m_button10, 1, wx.ALL, 5 )
-		
-		
-		bSizer34.Add( sbSizer101, 1, wx.ALL|wx.EXPAND, 5 )
-		
 		
 		bSizer33.Add( bSizer34, 0, wx.EXPAND, 5 )
 		
@@ -1061,3 +1038,4 @@ class Frame_MAIN ( wx.Frame ):
 	def func_plot_map( self, event ):
 		event.Skip()
 	
+

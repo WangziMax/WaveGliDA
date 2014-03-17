@@ -10,7 +10,37 @@ from calc_salt import salinity_vec as calc_salt
 import numpy as np
 from pandas import Series
 import wx
+import seawater as sea
 
+
+def convert_oxygen( self ):
+    if hasattr(  self.data, 'sbe63_oxygen' ) & \
+        hasattr( self.data, 'prwl_salt'   ) & \
+        hasattr( self.data, 'prwl_temp'   ):
+        self.StatusBar.SetStatusText('Converting Oxygen')
+        print 'converting oxygen'
+        # conversion from mL/L to umol/L
+        self.data.sbe63_oxygen = self.data.sbe63_oxygen * .7 * 44.661
+        
+        # conversion to umol/kg
+        density = sea.dens0(self.data.prwl_salt, self.data.prwl_temp)
+        self.data.sbe63_oxygen = self.data.sbe63_oxygen / density * 1000.
+        
+        # calculating saturation potential
+        i = np.where([key.startswith('sbe63_oxygen') for key in self.data.keys()])[0].max() + 1
+        sbe63_oxygen_sat = Series(None, index=self.data.index)
+        sbe63_oxygen_sat[:] = sea.satO2( self.data.prwl_salt, self.data.prwl_temp)
+        sbe63_oxygen_sat = sbe63_oxygen_sat * 44.661 
+        sbe63_oxygen_sat = sbe63_oxygen_sat / density * 1000.
+        self.data.insert(i, 'sbe63_oxygen_sat', sbe63_oxygen_sat)
+        
+        # calculating saturation %
+        sbe63_oxygen_sat_precent = Series(None, index=self.data.index)
+        sbe63_oxygen_sat_precent = self.data.sbe63_oxygen / self.data.sbe63_oxygen_sat * 100.
+        self.data.insert(i+1, 'sbe63_oxygen_sat_precent', sbe63_oxygen_sat_precent)
+        
+    else:
+        pass
 
 def func_calc_salt( self, event ):
     if hasattr(self.data, 'prwl_salt'):
