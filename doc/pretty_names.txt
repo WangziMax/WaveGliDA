@@ -25,7 +25,10 @@ prwl_cond,Conductivity
 prwl_pres,Prawler Pressure (kPa)
 prwl_temp,Sea Temperature ($^{\circ}$C)
 prwl_salt,Salinity (units)
-sb63_temp,SeaBird Temperature ($^{\circ}$C)
+sbe63_temp,SeaBird Temperature ($^{\circ}$C)
+sbe63_oxygen, SeaBird Oxygen ($\mu mol.kg^{-1}$)
+sbe63_oxygen_sat, Theoretical Oxygen Saturation ($\mu mol.kg^{-1}$)
+sbe63_oxygen_sat_precent, Oxygen Saturation (%)
 wg_battery_logic,Battery - Logic (V)
 wg_battery_transmitter,Battery - Transmitter (V)
 wg_datenum,Date and Time

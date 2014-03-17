@@ -118,6 +118,7 @@ def func_read_selected( self, event ):
     self.TC_FileStatus.AppendText(self.ImportErrors)
     self.func_calc_salt( None )
     self.func_calc_co2 ( None )
+    self.convert_oxygen( )
     
     date_sta, date_end = self.data.__str__().split('\n')[1].split(',')[1].strip().split(' to ')
     date_sta = datetime.strptime(date_sta.split('+')[0], '%Y-%m-%d %H:%M:%S')

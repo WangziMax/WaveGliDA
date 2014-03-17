@@ -23,6 +23,9 @@ def func_populate_plot_choices(self):
         if self.data[col].dtype == np.float64:
             y1list.append(col)
             y2list.append(col)
+        else:
+            pass
+            #~ print col, self.data[col]
 
     y1list.insert (0, 'Choose a variable')
     y2list.insert (0, 'No second Y-axis')

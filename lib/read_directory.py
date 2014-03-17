@@ -105,7 +105,7 @@ def read_wg_filelist(file_list, self):
 
         self.Files_Progress.SetValue(c+1)
         self.StatusBar.SetStatusText('reading %s' % os.path.split(fullpath)[-1])
-
+    
     if dat: # if there are no files in the dir, returns None
         self.StatusBar.SetStatusText('')
         return dat.sort_index().drop_duplicates()

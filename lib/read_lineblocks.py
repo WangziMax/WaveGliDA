@@ -127,31 +127,40 @@ def read_prawler(lines):
 def read_durafet(lines):
 
     data = np.array(lines[1].split(), ndmin=2).repeat(10, 0)
-    head = ['duft_date',        'duft_time',
-            'duft_battery',
-            'duft_temp',
-            'duft_fet_intV',    'duft_fet_extV',
-            'duft_pHV',
-            'duft_ctrl_temp',
-            'duft_presV']
+    
+    data_str = data[:, :2]
+    data_flt = data[:, 2:].astype(float)
+    head_str = ['duft_date',        'duft_time']
+    head_flt = ['duft_battery',
+                'duft_unknown',
+                'duft_fet_intV',    'duft_fet_extV',
+                'duft_pHV',
+                'duft_ctrl_temp',
+                'duft_presV']
 
     dat = {}
-    dat.update( zip( head, data.T))
+    dat.update( zip( head_flt, data_flt.T))
+    dat.update( zip( head_str, data_str.T))
     # Create a pandas.DataFrame from the dictionary
     # This fills each key to have as many items as the index = 10
     dat = DataFrame(dat, index=range(10))
-
+    
     return dat.to_dict(outtype='list')
 
 
 def read_sbe63(lines):
 
     data = np.array(lines[1].split()).astype(float)
-    """sb63_phase	sbe63_phasestd    sbe63_thermistorV	sbe63_thermistor voltage stddev	sbe63 converted oxygen	sbe63 converted oxygen stddev	sbe63 converted temp	sbe63 converted temp stddev
-    """
-    dat = {'sb63_temp': data[-3]}
+    head = ["sb63_phase",           "sbe63_phase_stdev",
+            "sbe63_thermistorV",    "sbe63_thermistorV_stdev",
+            "sbe63_oxygen",         "sbe63_oxygen_stdev",
+            "sbe63_temp",           "sbe63_temp_stdev",
+            "sbe63_unknown"]
+    
+    dat = {}
+    dat.update( zip( head, data.T))
     # Create a pandas.DataFrame from the dictionary
     # This fills each key to have as many items as the index = 10
     dat = DataFrame(dat, index=range(10))
-
+    
     return dat.to_dict(outtype='list')
