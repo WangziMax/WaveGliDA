@@ -19,7 +19,7 @@ def read_meteo( fname ):
         dat.pressure_mb[i] = dat.pressure_mb[i][:-1]
     
     dat.pressure_mb = dat.pressure_mb.str.replace(',', '.').astype(float)
-    
+    print dat
     dat = dat.resample('H',  how='mean')
     
     dat.pressure_mb.plot(ls='none', marker='.')
