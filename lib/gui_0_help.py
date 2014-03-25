@@ -26,3 +26,4 @@ def func_update_help( self, event ):
                         self.help_list[1][idx],
                         pfx='./doc/help_', sfx='.txt')
     self.TXT_HELP.ScrollPages(-10)
+    

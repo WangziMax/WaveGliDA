@@ -14,41 +14,6 @@ import thread
 import wx.grid as wxGrid
 import time
 
-    
-class HugeTable(wxGrid.PyGridTableBase):
-    def __init__(self, pdDataFrame):
-        wxGrid.PyGridTableBase.__init__(self)
-        
-        datetimes = pdDataFrame.index.to_datetime()
-        self.rowLabels = [d.strftime('%Y-%m-%d    %H:%M') for d in datetimes]
-
-        self.colLabels = pdDataFrame.keys()
-
-        self.data = pdDataFrame.values
-        
-    def GetAttr(self, row, col, kind ):
-        attr = wxGrid.GridCellAttr()
-        attr.SetReadOnly( 1 )
-        return attr
-        
-    def GetNumberRows(self):
-        return len(self.data)
-
-    def GetNumberCols(self):
-        return len(self.data[0])
-
-    def GetValue(self, row, col):
-        return self.data[row][col]
-
-    #~ # Called when the grid needs to display column labels               
-    def GetColLabelValue(self, col):
-        return self.colLabels[col]
-
-    #~ # Called when the grid needs to display row labels
-    def GetRowLabelValue(self,row):
-        return self.rowLabels[row]
-
-        
 
 def func_listfiles(self, event):
     wg_dir = self.DirSelector.GetPath()
@@ -98,7 +63,6 @@ def func_read_selected( self, event ):
 
     file_list = [join(dir_path, fname) for fname in all_list[selection]]
     
-    
     NormCursor = self.MAIN.GetCursor()
     BusyCursor = wx.StockCursor(wx.CURSOR_WAIT)
     self.MAIN.SetCursor(BusyCursor)
@@ -108,31 +72,15 @@ def func_read_selected( self, event ):
     
     self.data = read_wg_filelist(file_list, self)
     
-    num_import_errors = len(self.ImportErrors.splitlines())
-    self.TC_FileStatus.AppendText('================\n')
-    self.TC_FileStatus.AppendText(' IMPORT SUMMARY\n')
-    self.TC_FileStatus.AppendText('================\n')
-    self.TC_FileStatus.AppendText('Total Files:  %d\n' % len(file_list))
-    self.TC_FileStatus.AppendText('Successful:   %d\n' % (len(file_list) - num_import_errors))
-    self.TC_FileStatus.AppendText('Failed:       %d (names below)\n' % num_import_errors)
-    self.TC_FileStatus.AppendText(self.ImportErrors)
+    print_import_summary( self, file_list )
+    
     self.func_calc_salt( None )
     self.func_calc_co2 ( None )
     self.convert_oxygen( )
+    self.get_weather( )
     
-    date_sta, date_end = self.data.__str__().split('\n')[1].split(',')[1].strip().split(' to ')
-    date_sta = datetime.strptime(date_sta.split('+')[0], '%Y-%m-%d %H:%M:%S')
-    date_end = datetime.strptime(date_end.split('+')[0], '%Y-%m-%d %H:%M:%S')
-    self.TC_FileStatus.AppendText('\n')
-    self.TC_FileStatus.AppendText('==============\n')
-    self.TC_FileStatus.AppendText(' DATA SUMMARY \n')
-    self.TC_FileStatus.AppendText('==============\n')
-    self.TC_FileStatus.AppendText('Start \t')
-    self.TC_FileStatus.AppendText('%s \n' % date_sta.strftime('%H:%M - %d %b %Y'))
-    self.TC_FileStatus.AppendText('End   \t')
-    self.TC_FileStatus.AppendText('%s \n\n' % date_end.strftime('%H:%M - %d %b %Y'))
-    self.TC_FileStatus.AppendText('\n'.join(self.data.__str__().split('\n')[2:-1]))
-    self.TC_FileStatus.SetInsertionPoint(0)
+    
+    print_data_summary( self )
     
     self.func_populate_datagrid( None )
     
@@ -170,6 +118,29 @@ def func_loaddata( self, event ):
     
     self.func_calc_salt( None )
     self.func_calc_co2( None )
+    self.convert_oxygen( )
+    
+    
+    print_data_summary( self )
+    
+    self.func_populate_datagrid( None )
+    
+    self.MAIN.SetCursor(NormCursor)
+
+
+def print_import_summary( self, file_list ):
+
+    num_import_errors = len(self.ImportErrors.splitlines())
+    self.TC_FileStatus.AppendText('================\n')
+    self.TC_FileStatus.AppendText(' IMPORT SUMMARY\n')
+    self.TC_FileStatus.AppendText('================\n')
+    self.TC_FileStatus.AppendText('Total Files:  %d\n' % len(file_list))
+    self.TC_FileStatus.AppendText('Successful:   %d\n' % (len(file_list) - num_import_errors))
+    self.TC_FileStatus.AppendText('Failed:       %d (names below)\n' % num_import_errors)
+    self.TC_FileStatus.AppendText(self.ImportErrors)
+
+
+def print_data_summary( self ):
     
     date_sta, date_end = self.data.__str__().split('\n')[1].split(',')[1].strip().split(' to ')
     date_sta = datetime.strptime(date_sta.split('+')[0], '%Y-%m-%d %H:%M:%S')
@@ -184,67 +155,24 @@ def func_loaddata( self, event ):
     self.TC_FileStatus.AppendText('%s \n\n' % date_end.strftime('%H:%M - %d %b %Y'))
     self.TC_FileStatus.AppendText('\n'.join(self.data.__str__().split('\n')[2:-1]))
     self.TC_FileStatus.SetInsertionPoint(0)
-    
-    self.func_populate_datagrid( None )
-    
-    self.MAIN.SetCursor(NormCursor)
 
 
-def func_savedata( self, event ):
+def update_weather_stn( self, event ):
     
-    self.func_export_opts( None )
-    fullpath = self.BTN_SaveFile.GetPath()
-    file_ext = os.path.splitext(fullpath)
-    if file_ext[-1] == '.csv':
-        self.data.ix[self.save_ind,:].to_csv(fullpath)
+    if self.FP_weather_stn.GetPath().endswith('.txt'):
         
-        self.StatusBar.SetStatusText('File saved as %s' % fullpath)
-        clear_status_text( self )
+        path = os.path.split(self.FP_weather_stn.GetPath() )[-1]
+        
+        self.TC_weather_stn.Clear()
+        self.TC_weather_stn.AppendText( './' + path )
     
-    #~ elif file_ext[-1] == '.mat':
-        #~ from scipy.io import savemat
-        #~ save_dict = dict( zip( self.data.keys(), self.data.values.T ) )
-        #~ savemat(fullpath, save_dict)
-    
-    
-
-
-def func_populate_datagrid( self, event ):
-
-    self.StatusBar.SetStatusText('loading data into spreadsheet...')
-    self.Files_Progress.SetValue(0)
-    
-    table = HugeTable(self.data)
-    
-    self.GridData.SetTable(table, True)
-    
-    self.StatusBar.SetStatusText('')
-
-    self.BTN_SaveFile.Enable()
-    self.BTN_SaveFile.SetPath('%s.wg.csv' % datetime.today().strftime('%Y%m%d_%H%M'))
-    
-    self.func_populate_plot_choices()
-    self.func_populate_map_choices()
-    
-    
-def func_export_opts( self, event ):
-    
-    rb_s = self.RB_ExportOpts.GetSelection()
-    selected_item = self.RB_ExportOpts.GetItemLabel(rb_s)
-    if selected_item == 'all rows':
-        bool_func = lambda s: np.isrealobj(s)
-    elif selected_item == 'pump_off':
-        bool_func = lambda s: s.endswith('pump_off')
     else:
-        bool_func = lambda s: s == selected_item
-    
-    self.save_ind = np.array( map( bool_func, self.data.licor_cmnd ) )
-    
-    self.StatusBar.SetStatusText("'%s' chosen (%d items)" % (selected_item, np.sum(self.save_ind)))
-    
-    thread.start_new_thread(clear_status_text, (self,))
-
-
-def clear_status_text( self ):
-    time.sleep(2)
-    self.StatusBar.SetStatusText('')
+        self.TC_weather_stn.Clear()
+        error_str = "The file you have selected is not a valid Weather station file:"
+        error_str += "\n\n Try a different file."
+        dlg = wx.MessageDialog(self, error_str,'Import Error', wx.ICON_WARNING)
+        dlg.ShowModal()
+        dlg.Destroy()
+        self.FP_weather_stn.SetPath('')
+        return None
+        
