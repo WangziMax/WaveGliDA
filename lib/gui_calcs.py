@@ -12,24 +12,29 @@ from pandas import Series
 import wx
 import seawater as sea
 
+try:
+    dens0 = sea.dens0
+    satO2 = sea.satO2
+except:
+    dens0 = sea.csiro.dens0
+    satO2 = sea.csiro.satO2
 
 def convert_oxygen( self ):
     if hasattr(  self.data, 'sbe63_oxygen' ) & \
         hasattr( self.data, 'prwl_salt'   ) & \
         hasattr( self.data, 'prwl_temp'   ):
         self.StatusBar.SetStatusText('Converting Oxygen')
-        print 'converting oxygen'
         # conversion from mL/L to umol/L
         self.data.sbe63_oxygen = self.data.sbe63_oxygen * .7 * 44.661
         
         # conversion to umol/kg
-        density = sea.dens0(self.data.prwl_salt, self.data.prwl_temp)
+        density = dens0(self.data.prwl_salt, self.data.prwl_temp)
         self.data.sbe63_oxygen = self.data.sbe63_oxygen / density * 1000.
         
         # calculating saturation potential
         i = np.where([key.startswith('sbe63_oxygen') for key in self.data.keys()])[0].max() + 1
         sbe63_oxygen_sat = Series(None, index=self.data.index)
-        sbe63_oxygen_sat[:] = sea.satO2( self.data.prwl_salt, self.data.prwl_temp)
+        sbe63_oxygen_sat[:] = satO2( self.data.prwl_salt, self.data.prwl_temp)
         sbe63_oxygen_sat = sbe63_oxygen_sat * 44.661 
         sbe63_oxygen_sat = sbe63_oxygen_sat / density * 1000.
         self.data.insert(i, 'sbe63_oxygen_sat', sbe63_oxygen_sat)

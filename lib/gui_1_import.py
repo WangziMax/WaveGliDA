@@ -85,6 +85,7 @@ def func_read_selected( self, event ):
     self.func_populate_datagrid( None )
     
     self.MAIN.SetCursor(NormCursor)
+    self.clear_status_text( )
 
 
 def func_loaddata( self, event ):
@@ -120,6 +121,7 @@ def func_loaddata( self, event ):
     self.func_calc_co2( None )
     self.convert_oxygen( )
     
+    self.clear_status_text( )
     
     print_data_summary( self )
     

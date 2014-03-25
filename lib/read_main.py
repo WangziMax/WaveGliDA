@@ -111,7 +111,7 @@ def read_wg_filelist(file_list, progress_obj=None, verbose=False):
 
 
 if __name__ == "__main__":
-    dirname = 'D:/Desktop/WaveGlider/test_data/san53'
+    dirname = 'D:/Desktop/C0001_SAN53'
 
     file_list = get_wg_filenames(dirname)
     dat = read_wg_filelist(file_list, verbose=True)

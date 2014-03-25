@@ -1,6 +1,5 @@
 CO2 Calculations
 ================
-*** UNDER CONSTRUCTION -- CURRENTLY NOT WORKING ***
 
 The CO2 calculations are shown by function. See './doc/calc_co2.py' for more
 

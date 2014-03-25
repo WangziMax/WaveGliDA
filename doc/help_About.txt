@@ -5,8 +5,8 @@ A program to read, calculate and plot raw Wave Glider files.
 
 For more info read the help and info files in this panel.
  
-version:    0.5
-date:       6 March 2014
+version:    0.6
+date:       25 March 2014
 author:     Luke Gregor
 email:      luke.gregor@outlook.com
 
@@ -20,11 +20,9 @@ email:      luke.gregor@outlook.com
  * Need to check the input temperature for pCO2(atm) and fCO2(atm)
  * Help for the maps
  * Glider speed
- * Standard plots for xyplots
  * Data Filters:
     * Lat, Lon == 0, 0
     * Salinity <= 15 (air samples)
     * Var_std  >= threshold
  * Mac Compatibility
-    * Scatter Maps
- * Mouse busy curser    
+    * Scatter Maps 
