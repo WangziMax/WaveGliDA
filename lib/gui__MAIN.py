@@ -92,45 +92,56 @@ class Frame_MAIN ( wx.Frame ):
 		
 		bSizer30 = wx.BoxSizer( wx.VERTICAL )
 		
-		bSizer32 = wx.BoxSizer( wx.HORIZONTAL )
+		Sizer_SelectBox = wx.BoxSizer( wx.HORIZONTAL )
+		
+		bSizer31 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer652 = wx.BoxSizer( wx.VERTICAL )
+		
+		bSizer671 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.DirSelector = wx.DirPickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a folder", wx.DefaultPosition, wx.DefaultSize, wx.DIRP_DIR_MUST_EXIST )
 		self.DirSelector.SetToolTipString( u"load multiple raw files" )
 		
-		bSizer32.Add( self.DirSelector, 1, wx.ALL|wx.EXPAND, 5 )
-		
-		self.BTN_LoadFile = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"Wave Glider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OPEN )
-		self.BTN_LoadFile.SetToolTipString( u"Load a previously saved file (*wg.csv)" )
-		
-		bSizer32.Add( self.BTN_LoadFile, 1, wx.ALL, 5 )
-		
-		
-		bSizer30.Add( bSizer32, 0, wx.EXPAND, 5 )
-		
-		bSizer66 = wx.BoxSizer( wx.VERTICAL )
+		bSizer671.Add( self.DirSelector, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		self.CB_SelectAll = wx.CheckBox( self.NBPanel_FileSelection, wx.ID_ANY, u"Select All", wx.DefaultPosition, wx.DefaultSize, wx.CHK_3STATE|wx.CHK_ALLOW_3RD_STATE_FOR_USER )
 		self.CB_SelectAll.Enable( False )
 		
-		bSizer66.Add( self.CB_SelectAll, 0, wx.LEFT|wx.TOP, 8 )
+		bSizer671.Add( self.CB_SelectAll, 0, wx.ALL|wx.EXPAND|wx.LEFT|wx.TOP, 8 )
 		
 		
-		bSizer30.Add( bSizer66, 0, wx.EXPAND, 5 )
-		
-		Sizer_SelectBox = wx.BoxSizer( wx.HORIZONTAL )
-		
-		bSizer31 = wx.BoxSizer( wx.VERTICAL )
+		bSizer652.Add( bSizer671, 0, wx.EXPAND, 5 )
 		
 		LB_FilesChoices = []
 		self.LB_Files = wx.ListBox( self.NBPanel_FileSelection, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, LB_FilesChoices, wx.LB_EXTENDED|wx.LB_NEEDED_SB )
 		self.LB_Files.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
 		
-		bSizer31.Add( self.LB_Files, 1, wx.ALL|wx.EXPAND, 5 )
+		bSizer652.Add( self.LB_Files, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer31.Add( bSizer652, 1, wx.EXPAND, 5 )
+		
+		bSizer651 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.FP_weather_stn = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OPEN )
+		bSizer651.Add( self.FP_weather_stn, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		self.TC_weather_stn = wx.TextCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_READONLY|wx.TE_RICH )
+		bSizer651.Add( self.TC_weather_stn, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		
+		bSizer31.Add( bSizer651, 0, wx.EXPAND, 5 )
 		
 		
 		Sizer_SelectBox.Add( bSizer31, 1, wx.EXPAND, 5 )
 		
 		bSizer341 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.BTN_LoadFile = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"Wave Glider CSV | *.wg.csv", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OPEN )
+		self.BTN_LoadFile.SetToolTipString( u"Load a previously saved file (*wg.csv)" )
+		
+		bSizer341.Add( self.BTN_LoadFile, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		self.TC_FileStatus = wx.TextCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_RICH )
 		self.TC_FileStatus.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 90, False, wx.EmptyString ) )
@@ -141,37 +152,21 @@ class Frame_MAIN ( wx.Frame ):
 		Sizer_SelectBox.Add( bSizer341, 2, wx.EXPAND, 5 )
 		
 		
-		bSizer30.Add( Sizer_SelectBox, 2, wx.EXPAND, 5 )
+		bSizer30.Add( Sizer_SelectBox, 8, wx.EXPAND, 5 )
 		
-		bSizer641 = wx.BoxSizer( wx.HORIZONTAL )
-		
-		bSizer651 = wx.BoxSizer( wx.VERTICAL )
-		
-		self.FP_weather_stn = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OPEN )
-		bSizer651.Add( self.FP_weather_stn, 0, wx.ALL|wx.EXPAND, 5 )
-		
-		self.TC_weather_stn = wx.TextCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_LEFT|wx.TE_READONLY )
-		bSizer651.Add( self.TC_weather_stn, 1, wx.ALL|wx.EXPAND, 5 )
-		
-		
-		bSizer641.Add( bSizer651, 1, wx.EXPAND, 5 )
-		
-		bSizer661 = wx.BoxSizer( wx.VERTICAL )
+		bSizer661 = wx.BoxSizer( wx.HORIZONTAL )
 		
 		self.Button_ReadFiles = wx.Button( self.NBPanel_FileSelection, wx.ID_ANY, u"Read Selected Files", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.Button_ReadFiles.Enable( False )
 		
-		bSizer661.Add( self.Button_ReadFiles, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer661.Add( self.Button_ReadFiles, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		self.Files_Progress = wx.Gauge( self.NBPanel_FileSelection, wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL )
 		self.Files_Progress.SetValue( 0 ) 
-		bSizer661.Add( self.Files_Progress, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer661.Add( self.Files_Progress, 2, wx.ALL|wx.EXPAND, 5 )
 		
 		
-		bSizer641.Add( bSizer661, 2, wx.EXPAND, 5 )
-		
-		
-		bSizer30.Add( bSizer641, 0, wx.EXPAND, 5 )
+		bSizer30.Add( bSizer661, 1, wx.EXPAND, 5 )
 		
 		
 		Sizer_FileSelection.Add( bSizer30, 1, wx.EXPAND, 5 )
@@ -951,10 +946,10 @@ class Frame_MAIN ( wx.Frame ):
 		# Connect Events
 		self.LB_HELP.Bind( wx.EVT_LISTBOX, self.func_update_help )
 		self.DirSelector.Bind( wx.EVT_DIRPICKER_CHANGED, self.func_listfiles )
-		self.BTN_LoadFile.Bind( wx.EVT_FILEPICKER_CHANGED, self.func_loaddata )
 		self.CB_SelectAll.Bind( wx.EVT_CHECKBOX, self.func_select_files )
 		self.LB_Files.Bind( wx.EVT_LISTBOX, self.func_update_checkbox )
 		self.FP_weather_stn.Bind( wx.EVT_FILEPICKER_CHANGED, self.update_weather_stn )
+		self.BTN_LoadFile.Bind( wx.EVT_FILEPICKER_CHANGED, self.func_loaddata )
 		self.Button_ReadFiles.Bind( wx.EVT_BUTTON, self.func_read_selected )
 		self.BTN_SaveFile.Bind( wx.EVT_FILEPICKER_CHANGED, self.func_savedata )
 		self.RB_ExportOpts.Bind( wx.EVT_RADIOBOX, self.func_export_opts )
@@ -993,9 +988,6 @@ class Frame_MAIN ( wx.Frame ):
 	def func_listfiles( self, event ):
 		event.Skip()
 	
-	def func_loaddata( self, event ):
-		event.Skip()
-	
 	def func_select_files( self, event ):
 		event.Skip()
 	
@@ -1003,6 +995,9 @@ class Frame_MAIN ( wx.Frame ):
 		event.Skip()
 	
 	def update_weather_stn( self, event ):
+		event.Skip()
+	
+	def func_loaddata( self, event ):
 		event.Skip()
 	
 	def func_read_selected( self, event ):

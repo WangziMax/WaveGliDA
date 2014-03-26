@@ -82,7 +82,7 @@ class WavGliDaPro(Frame_MAIN):
         self.StatusBar.SetFont(wx.Font( 13, 74, 90, 90, False, wx.EmptyString ) )
         
         if sys.platform.startswith('darwin') | sys.platform.startswith('win'):
-            self.DirSelector.GetChildren( )[0].SetLabel('Load multiple raw files from a directory')
+            self.DirSelector.GetChildren( )[0].SetLabel('Load raw files from a directory')
             self.BTN_LoadFile.GetChildren()[0].SetLabel('Load previously saved file')
             self.FP_weather_stn.GetChildren()[0].SetLabel('Select weather station file')
         self.BTN_SaveFile.GetChildren()[0].SetLabel('Save data as *.csv')

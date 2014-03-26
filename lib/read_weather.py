@@ -50,7 +50,4 @@ def read_weather_file( fname ):
     
     
 if __name__ == "__main__":
-    import os
-    os.chdir('../')
-    from WaveGliDA import main
     main()
