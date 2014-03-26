@@ -3,6 +3,13 @@ CHANGES
 Changes are shown by version
 
 ------------
+ Version 0.6
+------------
+ * Weather station file support added
+ * seawater bug fixed (caused by different hirarchy between OS')
+ * Tidied up files to make editing easier
+
+------------
  Version 0.5
 ------------
  * pCO2 calculations

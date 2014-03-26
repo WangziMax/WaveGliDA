@@ -1,10 +1,10 @@
-WaveGliDA (0.5)
+WaveGliDA (0.6)
 ===============
 WAVe GLIder Data Analysis is a program to read, calculate and plot raw Wave Glider files. 
 For more info read the help and info files in this panel.
  
-* version:    0.5 
-* date:       6 March 2014
+* version:    0.6
+* date:       25 March 2014
 * author:     Luke Gregor
 * email:      luke.gregor@outlook.com
 
@@ -31,10 +31,6 @@ To run the program navigate to the WaveGliDA directory and type:
 
 
 ####E. TO DO
-1. pco2 calculations
-2. help for the maps
+1. doule check pco2 calculations
+2. help for the maps and troubleshoot for Mac OS X
 3. glider speed
-5. a list of standard plots for xyplots
-6. Salinity does not show on xyplot options when importing data
-9. Troubleshoot the errors that pop up in the terminal
-
