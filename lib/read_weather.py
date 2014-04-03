@@ -10,21 +10,15 @@ def main():
 
 def get_weather( self ):
     
-    if not self.FP_weather_stn.GetPath():
-        return
+    self.StatusBar.SetStatusText('Importing Weather Data')
+    fname = self.FP_weather_stn.GetPath()
     
-    elif self.FP_weather_stn.GetPath().endswith('.txt'):
-        self.StatusBar.SetStatusText('Importing Weather Data')
-        fname = self.FP_weather_stn.GetPath()
-        
-        wthr_data = read_weather_file( fname ).tz_localize('UTC')
-        self.data = self.data.join( wthr_data, how='left' )
-        
-        for key in wthr_data.keys():
-            self.data[key] = self.data[key].fillna(method='pad')
-        
-        
-
+    wthr_data = read_weather_file( fname ).tz_localize('UTC')
+    self.data = self.data.join( wthr_data, how='left' )
+    
+    for key in wthr_data.keys():
+        self.data[key] = self.data[key].fillna(method='pad')
+    
 
 def read_weather_file( fname ):
     
