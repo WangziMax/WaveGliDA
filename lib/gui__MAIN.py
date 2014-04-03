@@ -124,7 +124,7 @@ class Frame_MAIN ( wx.Frame ):
 		
 		bSizer651 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.FP_weather_stn = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OPEN )
+		self.FP_weather_stn = wx.FilePickerCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.txt", wx.DefaultPosition, wx.DefaultSize, wx.FLP_OPEN )
 		bSizer651.Add( self.FP_weather_stn, 1, wx.ALL|wx.EXPAND, 5 )
 		
 		self.TC_weather_stn = wx.TextCtrl( self.NBPanel_FileSelection, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_NO_VSCROLL|wx.TE_READONLY|wx.TE_RICH )

@@ -171,7 +171,7 @@ def update_weather_stn( self, event ):
     else:
         self.TC_weather_stn.Clear()
         error_str = "The file you have selected is not a valid Weather station file:"
-        error_str += "\n\n Try a different file."
+        error_str += "\nTry a different file."
         
         print error_str
         

@@ -10,14 +10,10 @@ from calc_salt import salinity_vec as calc_salt
 import numpy as np
 from pandas import Series
 import wx
-import seawater as sea
-
 try:
-    dens0 = sea.dens0
-    satO2 = sea.satO2
+    from seawater import dens0, satO2
 except:
-    dens0 = sea.csiro.dens0
-    satO2 = sea.csiro.satO2
+    from seawater.csiro import dens0, satO2
 
 def convert_oxygen( self ):
     if hasattr(  self.data, 'sbe63_oxygen' ) & \
