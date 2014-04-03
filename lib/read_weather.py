@@ -5,7 +5,7 @@ from pylab import *
 def main():
     
     dat = read_weather_file( 'D:/Dropbox/Data/SOCCO pCO2/WGpCO2002/CSIR#1 Telemetry and weather.txt' )
-    print dat
+    return dat
 
 
 def get_weather( self ):
@@ -50,4 +50,4 @@ def read_weather_file( fname ):
     
     
 if __name__ == "__main__":
-    main()
+    out = main()

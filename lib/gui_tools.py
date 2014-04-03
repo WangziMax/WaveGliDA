@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-
 created: Sat Jan 18 23:42:04 2014
 author:  Luke Gregor
 """
-
 import numpy as np
 import calc_co2 as co2
 import time
@@ -22,19 +20,6 @@ def clear_status_text( self ):
     self.StatusBar.SetStatusText('')
 
 
-def get_pretty_name(var_name, input_file='./doc/pretty_names.txt'):
-
-    with open(input_file) as file_obj:
-        pretty_lines = file_obj.read().splitlines()
-
-    for line in pretty_lines:
-        if line.startswith(var_name):
-            return line.split(',')[-1].strip()
-        else:
-            pass
-    return ''
-
-
 def pdDataFrame_2_numpy(Data, col_names=None):
 
     if not col_names:
@@ -46,4 +31,3 @@ def pdDataFrame_2_numpy(Data, col_names=None):
         out[key] = np.array(Data[key])
 
     return out
-

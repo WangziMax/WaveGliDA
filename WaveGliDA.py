@@ -32,15 +32,14 @@ class WavGliDaPro(Frame_MAIN):
     from lib.gui_1_import       import  func_listfiles, func_update_checkbox, func_loaddata, \
                                         func_read_selected, func_select_files, update_weather_stn
     from lib.gui_2_view_save    import  func_export_opts, func_populate_datagrid, func_savedata
-    from lib.gui_3_line_plots   import  func_populate_plot_choices, update_x_params, get_yidx,\
+    from lib.gui_3_line_plots   import  func_populate_plot_choices, update_x_params, get_yidx, func_plotxy,\
                                         update_y1_params, update_y2_params, update_ylims, update_xlims, \
                                         enable_y_properties, enable_plot_button, get_plot_properties
     from lib.gui_4_map          import  get_midx, update_m_params, func_update_mdates, trigger_m, \
-                                        func_populate_map_choices, get_map_properties, func_m_global_limits
+                                        func_populate_map_choices, get_map_properties, \
+                                        func_m_global_limits, func_plot_map
     from lib.gui_tools          import  clear_status_text, list_2_ListBox
     from lib.gui_calcs          import  func_calc_salt, func_calc_co2, convert_oxygen
-    from lib.plot_draw          import  func_plotxy
-    from lib.map_draw           import  func_plot_map
     from lib.read_weather       import  read_weather_file, get_weather
 
 

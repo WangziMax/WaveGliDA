@@ -172,9 +172,6 @@ def update_weather_stn( self, event ):
         self.TC_weather_stn.Clear()
         error_str = "The file you have selected is not a valid Weather station file:"
         error_str += "\n\n Try a different file."
-        dlg = wx.MessageDialog(self, error_str,'Import Error', wx.ICON_WARNING)
-        dlg.ShowModal()
-        dlg.Destroy()
-        self.FP_weather_stn.SetPath('')
-        return None
+        
+        print error_str
         

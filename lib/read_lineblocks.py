@@ -9,6 +9,27 @@ import pylab as plt
 from pandas import DataFrame
 
 
+def get_line_type(line):
+    """
+    Lines are classified based on the start of a "paragraph"
+    i.e. NORM signals that it is the start of a CO2 paragraph
+    I use indicies to indicate line types:
+           0 - blank
+           1 - CO2
+           2 - Durafet
+           3 - Prawler CTD
+           4 - SeaBird CTD
+    """
+
+    if line: line = line.strip().upper()
+    if len(line) < 2:                               return 0
+    elif line.startswith(('NORM', 'FAST', 'DEPL')): return 1
+    elif line.startswith('DURAFET'):                return 2
+    elif line.startswith('PRAWLER'):                return 3
+    elif line.startswith('SBE63'):                  return 4
+    elif line.startswith(('END', 'SW_X')):          return -1
+
+
 def read_licor(lines):
     """
     Reads a block of licor data from waveglider raw files.
