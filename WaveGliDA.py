@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __version__ = 0.6
 
+
 from matplotlib import use as mpl_use
 mpl_use('WXAgg')
 
@@ -16,7 +17,7 @@ def main():
     import os
     path = os.path.dirname(os.path.realpath(__file__))
     os.chdir(path)
-    app = wx.App(1)
+    app   = wx.App(1)
     frame = WavGliDaPro(None)
 
     frame.init()
