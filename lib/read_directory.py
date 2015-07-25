@@ -8,10 +8,11 @@ author:  Luke Gregor
 import os
 import re
 import numpy as np
-#~ from read_file import read_wgfile
 from datetime import datetime as dt
+from glob import glob
 from pandas import DataFrame
-from read_lineblocks import get_line_type, read_licor, read_durafet, read_prawler, read_sbe63
+from read_lineblocks import get_line_type, read_licor, read_durafet,\
+    read_prawler, read_sbe63
 
 
 def get_wg_filenames(dirname):
@@ -21,19 +22,10 @@ def get_wg_filenames(dirname):
     can be added, American is default [m d Y].
     """
 
-    strptime = dt.strptime
-    file_list = np.array(os.listdir(dirname))
-    fullpath_list, file_datetime, is_wg = [], [], []
-    for filename in file_list:
-        filepath = os.path.join(dirname, filename)
-        if is_wg_file(filepath):
-            wg_id, file_date = filename.split('_', 1)
-            file_datetime += strptime(file_date, '%m_%d_%Y'),
-            fullpath_list += filepath,
+    file_list = np.array(glob('%s/*' % dirname))
+    idx = np.array(map(os.path.isfile, file_list))
 
-    idx = np.argsort(np.array(file_datetime))
-
-    return np.array(fullpath_list)[idx]
+    return file_list[idx]
 
 
 def is_wg_file(filepath, glider_id=None):
@@ -102,14 +94,14 @@ def read_wg_filelist(file_list, self):
             else:        # for following iterations append the data
                 dat = dat.append(read_wgfile(fullpath))
         except:
-            self.ImportErrors += '              %s\n' % os.path.split(fullpath)[-1]
-            #~ self.TC_FileStatus.AppendText( error_txt )
+            self.ImportErrors += '              %s\n' % os.path.split(
+                fullpath)[-1]
 
+        self.Files_Progress.SetValue(c + 1)
+        self.StatusBar.SetStatusText(
+            'reading %s' % os.path.split(fullpath)[-1])
 
-        self.Files_Progress.SetValue(c+1)
-        self.StatusBar.SetStatusText('reading %s' % os.path.split(fullpath)[-1])
-    
-    if dat: # if there are no files in the dir, returns None
+    if dat:  # if there are no files in the dir, returns None
         self.StatusBar.SetStatusText('')
         return dat.sort_index().drop_duplicates()
     else:
@@ -192,7 +184,7 @@ def split_filestr(filestr):
 
 
 if __name__ == "__main__":
-    dirname = 'D:/Desktop/WaveGlider/test_data/may2012'
+    dirname = '/Users/luke/GitProjects/WaveGliDA/TestData/C0001_SAN53'
 
     file_list = get_wg_filenames(dirname)
-    dat = read_wg_filelist(file_list, verbose=True)
+    dat = read_wg_filelist(file_list)
