@@ -17,7 +17,7 @@ def main():
     import os
     path = os.path.dirname(os.path.realpath(__file__))
     os.chdir(path)
-    app   = wx.App(1)
+    app   = wx.App(0)
     frame = WavGliDaPro(None)
 
     frame.init()
@@ -45,9 +45,9 @@ class WavGliDaPro(Frame_MAIN):
 
 
     def init(self):
-        
+
         self.StatusBar.SetStatusText('Load data by selecting files using the buttons above')
-        
+
         # HELP FILES
         self.help_list = np.array([['About WavGliDA',        'About'],
                                    ['Changes Log',           'ChangeLog'],
@@ -56,10 +56,10 @@ class WavGliDaPro(Frame_MAIN):
                                    ['Plotting',              'Plotting'],
                                    ['CO2 Calculations',      'CO2calculations'],
                                    ]).T
-        
+
         self.list_2_ListBox(self.LB_HELP, self.help_list)
 
-        
+
         # SET FONTS
         if sys.platform.startswith('win'):
             font_monospace = "Lucida Sans Typewriter"
@@ -70,24 +70,24 @@ class WavGliDaPro(Frame_MAIN):
         elif sys.platform.startswith('lin'):
             font_monospace = "Monospace"
             size_monospace = 10
-        
+
         self.LB_Files.SetFont(      wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.TXT_HELP.SetFont(      wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.LB_Files.SetFont(      wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.TC_FileStatus.SetFont( wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.LB_HELP.SetFont(       wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
-        self.TC_weather_stn.SetFont(wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
+        # self.TC_weather_stn.SetFont(wx.Font( size_monospace, 74, 90, 90, False, font_monospace ) )
         self.GridData.SetDefaultCellFont(wx.Font( size_monospace-1, 74, 90, 90, False, font_monospace ) )
-        
+
         self.StatusBar.SetFont(wx.Font( 13, 74, 90, 90, False, wx.EmptyString ) )
-        
+
         if sys.platform.startswith('darwin') | sys.platform.startswith('win'):
             self.DirSelector.GetChildren( )[0].SetLabel('Load raw files from a directory')
             self.BTN_LoadFile.GetChildren()[0].SetLabel('Load previously saved file')
-            self.FP_weather_stn.GetChildren()[0].SetLabel('Select weather station file')
+            # self.FP_weather_stn.GetChildren()[0].SetLabel('Select weather station file')
         self.BTN_SaveFile.GetChildren()[0].SetLabel('Save data as *.csv')
-        
-        
+
+
 if __name__ == "__main__":
 
     main()

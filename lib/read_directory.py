@@ -8,9 +8,8 @@ author:  Luke Gregor
 import os
 import re
 import numpy as np
-from datetime import datetime as dt
 from glob import glob
-from pandas import DataFrame
+from pandas import DataFrame, concat
 from read_lineblocks import get_line_type, read_licor, read_durafet,\
     read_prawler, read_sbe63
 
@@ -85,25 +84,25 @@ def read_wg_filelist(file_list, self):
 
     self.Files_Progress.SetRange(len(file_list))
 
-    dat = None
+    dat = []
     for c, fullpath in enumerate(file_list):
         # adding file data to the dat info
         try:
-            if not dat:  # for the first iteration create the object
-                dat = read_wgfile(fullpath)
-            else:        # for following iterations append the data
-                dat = dat.append(read_wgfile(fullpath))
+            dat.append(read_wgfile(fullpath))
         except:
             self.ImportErrors += '              %s\n' % os.path.split(
                 fullpath)[-1]
+
 
         self.Files_Progress.SetValue(c + 1)
         self.StatusBar.SetStatusText(
             'reading %s' % os.path.split(fullpath)[-1])
 
     if dat:  # if there are no files in the dir, returns None
+        dat = concat(dat)
         self.StatusBar.SetStatusText('')
-        return dat.sort_index().drop_duplicates()
+        dat = dat.sort_index().drop_duplicates()
+        return dat
     else:
         return None
 

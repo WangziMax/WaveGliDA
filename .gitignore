@@ -8,6 +8,9 @@
 *.so
 *.fbp
 *.pyc
+*C00*
+*sublime*
+*TestData*
 
 # Packages #
 ############
